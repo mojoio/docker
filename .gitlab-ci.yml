@@ -9,9 +9,7 @@ stages:
   - trigger
 
 before_script:
-  - npm uninstall -g npmci
-  - npm install -g npmci
-  - npmci prepare docker
+  - npmci prepare docker-gitlab
 
 
 build:
