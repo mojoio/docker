@@ -32,6 +32,7 @@ test:
     - priv
 
 release:
+  image: hosttoday/ht-docker-node:npmts
   stage: release
   script:
     - npmci publish npm
