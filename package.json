@@ -1,0 +1,26 @@
+{
+  "name": "dockersock",
+  "version": "1.0.0",
+  "description": "communicate with docker sock from node",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "npmts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/pushrocks/dockersock.git"
+  },
+  "keywords": [
+    "docker",
+    "sock",
+    "container",
+    "request",
+    "api"
+  ],
+  "author": "Lossless GmbH",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://gitlab.com/pushrocks/dockersock/issues"
+  },
+  "homepage": "https://gitlab.com/pushrocks/dockersock#README"
+}
