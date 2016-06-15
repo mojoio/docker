@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "npmts",
-    "testindocker": "npmts && docker-machine start default; eval \"$(docker-machine env default)\" && docker build -t test-image . && docker run test-image"
+    "testindocker": "bash -x ./test/testEnv.sh"
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,8 @@
     "typings-global": "^1.0.3"
   },
   "devDependencies": {
-    "npmts-g": "^5.2.6"
+    "npmts-g": "^5.2.6",
+    "should": "^9.0.2",
+    "typings-test": "^1.0.1"
   }
 }

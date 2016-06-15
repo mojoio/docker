@@ -1,5 +1,5 @@
 import "typings-global";
-export declare class dockersock {
+export declare class Dockersock {
     sockPath: string;
     constructor(pathArg?: string);
     listContainers(): any;

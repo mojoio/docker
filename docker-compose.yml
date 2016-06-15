@@ -1,0 +1,22 @@
+nginx1 :
+  image: "nginx"
+  environment:
+      VIRTUAL_HOST: "test100.labkomp.de"
+  restart: always
+  container_name: nginx1
+nginx2:
+  image: nginx
+  environment:
+    VIRTUAL_HOST: "test101.labkomp.de"
+  restart: always
+  container_name: nginx2
+dockersock:
+  image: "trafficimg"
+  ports:
+    - "80:80"
+    - "443:443"
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+  env_file: "nogit/nogit.env"
+  restart: always
+  container_name: dockersock-container

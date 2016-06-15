@@ -1,0 +1,6 @@
+"use strict";
+require("typings-global");
+var dockersock_classes_dockersock_1 = require("./dockersock.classes.dockersock");
+exports.Dockersock = dockersock_classes_dockersock_1.Dockersock;
+
+//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7QUFBQSxRQUFPLGdCQUFnQixDQUFDLENBQUE7QUFDeEIsOENBQXlCLGlDQUFpQyxDQUFDO0FBQW5ELGdFQUFrRCIsImZpbGUiOiJpbmRleC5qcyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBcInR5cGluZ3MtZ2xvYmFsXCI7XG5leHBvcnQge0RvY2tlcnNvY2t9IGZyb20gXCIuL2RvY2tlcnNvY2suY2xhc3Nlcy5kb2NrZXJzb2NrXCIiXX0=

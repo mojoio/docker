@@ -1,7 +1,7 @@
 import "typings-global"
 import * as plugins from "./dockersock.plugins";
 
-export class dockersock {
+export class Dockersock {
     sockPath:string;
     constructor(pathArg:string = "http://unix:/var/run/docker.sock:"){
         this.sockPath = pathArg;

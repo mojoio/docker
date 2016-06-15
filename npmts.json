@@ -1,3 +1,4 @@
 {
-    "mode":"default"
+    "mode":"default",
+    "coverageTreshold":10
 }
