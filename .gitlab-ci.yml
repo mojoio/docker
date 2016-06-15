@@ -39,7 +39,7 @@ release:
   script:
     - npmci publish npm
   only:
-    - master
+    - tags
   tags:
     - lossless
     - priv
