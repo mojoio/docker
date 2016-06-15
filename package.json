@@ -1,6 +1,6 @@
 {
   "name": "dockersock",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "easy communication with docker from node, TypeScript ready",
   "main": "dist/index.js",
   "scripts": {
