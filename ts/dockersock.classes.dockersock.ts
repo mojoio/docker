@@ -51,18 +51,31 @@ export class Dockersock {
         return done.promise;
     }
     listImages() {
-        let done = plugins.q.defer();
-        return done.promise;
+        return this.request("GET","/images","?all=true");
     }
+    listImagesDangling(){
+        return this.request("GET","/images","?dangling=true");
+    }
+    pullImage(imageLabel:string){
+
+    };
+    createContainer(){
+        return this.request("POST","/containers/create","",{
+            "image":""
+        });
+    };
     getContainerId(){
 
-    }
+    };
     startContainer(containerNameArg){
         return this.request("POST","/containers/"+ containerNameArg +"/start");
     };
-    stopContainer(){
+    stopContainer(containerNameArg){
         return this.request("POST","/containers/"+ containerNameArg +"/stop");
-    }
+    };
+    removeContainer(containerNameArg){
+        return this.request("DELETE","/containers/" + containerNameArg + "?v=1");
+    };
     clean() {
         let done = plugins.q.defer();
         return done.promise;
@@ -70,14 +83,14 @@ export class Dockersock {
     getChange(){
 
     };
-    request(methodArg:string,routeArg:string,dataArg = {}){
+    request(methodArg:string,routeArg:string,queryArg:string = "", dataArg = {}){
         let done = plugins.q.defer();
         let jsonArg:string = JSON.stringify(dataArg);
-        let suffix:string = ""
+        let suffix:string = "";
         if(methodArg == "GET") suffix = "/json";
         let options = {
             method:methodArg,
-            url:this.sockPath + routeArg + suffix,
+            url:this.sockPath + routeArg + suffix + queryArg,
             headers:{
                 "Content-Type":"application/json"
             },
