@@ -1,13 +1,13 @@
 {
   "name": "dockersock",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "easy communication with docker from node, TypeScript ready",
   "main": "dist/index.js",
   "scripts": {
     "test": "npmts --notest && npm run build && npm run startdocker && npm run cleanup",
     "build": "docker build -t npmts-test-image .",
-    "startdocker":"docker run -v /var/run/docker.sock:/var/run/docker.sock --name npmts-test-container npmts-test-image",
-    "cleanup":"docker rm npmts-test-container && docker rmi npmts-test-image"
+    "startdocker": "docker run -v /var/run/docker.sock:/var/run/docker.sock --name npmts-test-container npmts-test-image",
+    "cleanup": "docker rm npmts-test-container && docker rmi npmts-test-image"
   },
   "repository": {
     "type": "git",
