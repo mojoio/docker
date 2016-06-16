@@ -122,7 +122,7 @@ export class Dockersock {
                 });
             requestStream.on("data",(data:Buffer) => {
                 let status = JSON.parse(data.toString()).status;
-                plugins.beautylog.log(status);
+                plugins.beautylog.logReduced(status);
             });
             requestStream.on("end",()=> {
                 done.resolve();

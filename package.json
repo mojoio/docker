@@ -27,7 +27,7 @@
   },
   "homepage": "https://gitlab.com/pushrocks/dockersock#README",
   "dependencies": {
-    "beautylog": "^5.0.10",
+    "beautylog": "^5.0.12",
     "q": "^1.4.1",
     "request": "^2.72.0",
     "typings-global": "^1.0.3"
