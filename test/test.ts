@@ -26,8 +26,8 @@ describe("dockersock",function(){
                 });
         });
         it("should pull an image from imagetag",function(done){
-            this.timeout(10000);
-            testDockersock.pullImage("nginx")
+            this.timeout(30000);
+            testDockersock.pullImage("hosttoday%2Fht-docker-dbase")
                 .then((dataArg)=>{
                     done();
                 },done);

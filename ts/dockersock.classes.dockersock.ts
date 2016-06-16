@@ -111,20 +111,22 @@ export class Dockersock {
     requestStream(methodArg,routeArg,endArg:boolean = true){
         let done = plugins.q.defer();
         if(methodArg == "POST"){
-            let requestStream = plugins.request.post(this.sockPath + routeArg)
-                .on("response",(response) => {
+            let requestStream = plugins.request.post(this.sockPath + routeArg);
+            requestStream.on("response",(response) => {
                     if(response.statusCode == 200){
-                        if(endArg == true){
-                            console.log("ending request");
-                            response.emit("end");
-                        } else {
-                            console.log("streaming forever");
-                        }
-                        done.resolve(response);
+                        plugins.beautylog.ok("request returned status 200, so we are good!");
                     } else {
+                        plugins.beautylog.error("request returned error: " + response.statusCode);
                         done.reject();
                     }
-                })
+                });
+            requestStream.on("data",(data:Buffer) => {
+                let status = JSON.parse(data.toString()).status;
+                plugins.beautylog.log(status);
+            });
+            requestStream.on("end",()=> {
+                done.resolve();
+            });         
         }
         return done.promise;
     }
