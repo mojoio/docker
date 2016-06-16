@@ -25,5 +25,12 @@ describe("dockersock",function(){
                     done();
                 });
         });
+        it("should pull an image from imagetag",function(done){
+            this.timeout(10000);
+            testDockersock.pullImage("nginx")
+                .then((dataArg)=>{
+                    done();
+                },done);
+        })
     });
 });

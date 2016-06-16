@@ -9,8 +9,8 @@ export declare class Dockersock {
     listContainersStopped(): any;
     listImages(): any;
     listImagesDangling(): any;
-    pullImage(imageLabel: string): void;
-    createContainer(): any;
+    pullImage(imageLabel: string): any;
+    createContainer(imageNameArg: any, pullFirst?: boolean): any;
     getContainerId(): void;
     startContainer(containerNameArg: any): any;
     stopContainer(containerNameArg: any): any;
@@ -18,4 +18,5 @@ export declare class Dockersock {
     clean(): any;
     getChange(): void;
     request(methodArg: string, routeArg: string, queryArg?: string, dataArg?: {}): any;
+    requestStream(methodArg: any, routeArg: any, endArg?: boolean): any;
 }

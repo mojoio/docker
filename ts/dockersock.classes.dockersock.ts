@@ -57,11 +57,11 @@ export class Dockersock {
         return this.request("GET","/images","?dangling=true");
     }
     pullImage(imageLabel:string){
-
+        return this.requestStream("POST","/images/create?fromImage=" + imageLabel);
     };
-    createContainer(){
+    createContainer(imageNameArg,pullFirst:boolean = true){
         return this.request("POST","/containers/create","",{
-            "image":""
+            "image":imageNameArg
         });
     };
     getContainerId(){
@@ -106,6 +106,26 @@ export class Dockersock {
                 done.reject(err);
             };
         });
+        return done.promise;
+    }
+    requestStream(methodArg,routeArg,endArg:boolean = true){
+        let done = plugins.q.defer();
+        if(methodArg == "POST"){
+            let requestStream = plugins.request.post(this.sockPath + routeArg)
+                .on("response",(response) => {
+                    if(response.statusCode == 200){
+                        if(endArg == true){
+                            console.log("ending request");
+                            response.emit("end");
+                        } else {
+                            console.log("streaming forever");
+                        }
+                        done.resolve(response);
+                    } else {
+                        done.reject();
+                    }
+                })
+        }
         return done.promise;
     }
 }
