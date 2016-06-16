@@ -8,6 +8,11 @@ export class Dockersock {
     }
 
     // methods
+    auth(userArg:string,passArg:string){
+        let done = plugins.q.defer();
+        this.request("POST","");
+        return done.promise;
+    }
     listContainers() {
         let done = plugins.q.defer();
         this.request("GET","/containers")
@@ -49,17 +54,30 @@ export class Dockersock {
         let done = plugins.q.defer();
         return done.promise;
     }
+    getContainerId(){
+
+    }
+    startContainer(containerNameArg){
+        return this.request("POST","/containers/"+ containerNameArg +"/start");
+    };
+    stopContainer(){
+        return this.request("POST","/containers/"+ containerNameArg +"/stop");
+    }
     clean() {
         let done = plugins.q.defer();
         return done.promise;
-    }
+    };
+    getChange(){
 
+    };
     request(methodArg:string,routeArg:string,dataArg = {}){
         let done = plugins.q.defer();
         let jsonArg:string = JSON.stringify(dataArg);
+        let suffix:string = ""
+        if(methodArg == "GET") suffix = "/json";
         let options = {
             method:methodArg,
-            url:this.sockPath + routeArg + "/json",
+            url:this.sockPath + routeArg + suffix,
             headers:{
                 "Content-Type":"application/json"
             },
