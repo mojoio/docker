@@ -47,7 +47,7 @@ trigger:
   script:
     - npmci trigger
   only:
-    - master
+    - tags
   tags:
     - lossless
     - priv

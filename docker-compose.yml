@@ -10,8 +10,8 @@ nginx2:
     VIRTUAL_HOST: "test101.labkomp.de"
   restart: always
   container_name: nginx2
-dockersock:
-  image: "trafficimg"
+npmts-test-container:
+  image: "npmts-test-image"
   ports:
     - "80:80"
     - "443:443"
@@ -19,4 +19,4 @@ dockersock:
     - "/var/run/docker.sock:/var/run/docker.sock"
   env_file: "nogit/nogit.env"
   restart: always
-  container_name: dockersock-container
+  container_name: npmts-test-container

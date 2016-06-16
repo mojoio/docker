@@ -4,8 +4,7 @@
   "description": "easy communication with docker from node, TypeScript ready",
   "main": "dist/index.js",
   "scripts": {
-    "test": "npmts",
-    "testindocker": "bash -x ./test/testEnv.sh"
+    "test": "npmts testindocker"
   },
   "repository": {
     "type": "git",
