@@ -20,19 +20,20 @@ export class Dockersock {
         this.listContainers()
             .then((dataArg) => {
                 let recursiveCounter = 0;
-                    let makeDetailed = function(){
-                        if(typeof dataArg[recursiveCounter] != "undefined"){
-                            this.request.get("GET","/containers/" + dataArg[recursiveCounter].Id)
-                                .then((data) => {
-                                    recursiveCounter++;
-                                    detailedDataObject.push(data);
-                                    makeDetailed();
-                                });
-                        } else {
-                            done.resolve(detailedDataObject);
-                        }
-                    };
-                    makeDetailed();
+                let makeDetailed = () => {
+                    if(typeof dataArg[recursiveCounter] != "undefined"){
+                        this.request("GET","/containers/" + dataArg[recursiveCounter].Id)
+                            .then((dataArg2) => {
+                                detailedDataObject.push(dataArg2);
+                                recursiveCounter++;
+                                // recursive call
+                                makeDetailed();
+                            });
+                    } else {
+                        done.resolve(detailedDataObject);
+                    }
+                };
+                makeDetailed();
             });
         return done.promise;
     };
@@ -64,7 +65,7 @@ export class Dockersock {
             },
             body:jsonArg
         };
-        plugins.request(options,function(err, res, body){
+        plugins.request(options,(err, res, body) => {
             if (!err && res.statusCode == 200) {
                 var responseObj = JSON.parse(body);
                 done.resolve(responseObj);

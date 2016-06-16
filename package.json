@@ -4,7 +4,10 @@
   "description": "easy communication with docker from node, TypeScript ready",
   "main": "dist/index.js",
   "scripts": {
-    "test": "npmts testindocker"
+    "test": "npmts --notest && npm run cleanup && npm run build && npm run startdocker",
+    "build": "docker build -t npmts-test-image .",
+    "startdocker":"docker run -v /var/run/docker.sock:/var/run/docker.sock --name npmts-test-container npmts-test-image",
+    "cleanup":"docker rm npmts-test-container && docker rmi npmts-test-image"
   },
   "repository": {
     "type": "git",

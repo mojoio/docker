@@ -10,5 +10,20 @@ describe("dockersock",function(){
             testDockersock = new Dockersock();
             testDockersock.should.be.instanceof(Dockersock);
         });
+        it("should list containers",function(done){
+            testDockersock.listContainers()
+                .then((dataArg)=>{
+                    console.log(dataArg);
+                    done();
+                });
+        });
+        it("should list detailed containers",function(done){
+            this.timeout(5000);
+            testDockersock.listContainersDetailed()
+                .then((dataArg)=>{
+                    console.log(dataArg);
+                    done();
+                });
+        });
     });
 });

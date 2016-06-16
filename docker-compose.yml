@@ -12,11 +12,7 @@ nginx2:
   container_name: nginx2
 npmts-test-container:
   image: "npmts-test-image"
-  ports:
-    - "80:80"
-    - "443:443"
   volumes:
     - "/var/run/docker.sock:/var/run/docker.sock"
-  env_file: "nogit/nogit.env"
   restart: always
   container_name: npmts-test-container

@@ -1,4 +1,6 @@
-FROM hosttoday/ht-docker-node:lts
-COPY ./node_modules /app-node/node_modules
-COPY ./dist /app-node/dist
+FROM hosttoday/ht-docker-node:npmts
+RUN mkdir app-node
+COPY ./ /app-node/
+WORKDIR /app-node
+ENV CI true
 CMD ["npmts"]
