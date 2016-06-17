@@ -80,8 +80,33 @@ export class Dockersock {
         let done = plugins.q.defer();
         return done.promise;
     };
-    getChange(){
-
+    callOnChange(cb:Function){
+        let cbPromise;
+        let changeBuffered:boolean = false; // when cb is running then buffer any consequent change
+        let requestStream = plugins.request.get(this.sockPath + "/events");
+        requestStream.on("response",(response) => {
+                if(response.statusCode == 200){
+                    plugins.beautylog.ok("request returned status 200, so we are good!");
+                } else {
+                    plugins.beautylog.error("request returned error: " + response.statusCode);
+                }
+            });
+        requestStream.on("data",(data:Buffer) => {
+            let status = JSON.parse(data.toString()).status;
+            plugins.beautylog.logReduced(status);
+            if(typeof cbPromise == "undefined" || cbPromise.state == "pending"){
+                cbPromise = cb();
+            } else if (changeBuffered) {
+                changeBuffered = true;
+                cbPromise.then(() => {
+                    changeBuffered = false;
+                    cbPromise = cb();
+                });
+            }
+        });
+        requestStream.on("end",()=> {
+            
+        });         
     };
     request(methodArg:string,routeArg:string,queryArg:string = "", dataArg = {}){
         let done = plugins.q.defer();
