@@ -59,10 +59,20 @@ export class Dockersock {
     pullImage(imageLabel:string){
         return this.requestStream("POST","/images/create?fromImage=" + imageLabel);
     };
-    createContainer(imageNameArg,pullFirst:boolean = true){
-        return this.request("POST","/containers/create","",{
-            "image":imageNameArg
-        });
+    createContainer(optionsArg,pullFirstArg:boolean = true){
+        let done = plugins.q.defer();
+        let create = () => {
+            return this.request("POST","/containers/create","",optionsArg);
+        }
+        if(pullFirstArg){
+            this.pullImage(optionsArg.Image)
+                .then(create)
+                .then(done.resolve);
+        } else {
+            create()
+                .then(done.resolve)
+        }
+        return done.promise;
     };
     getContainerId(){
 
