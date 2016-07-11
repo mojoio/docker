@@ -118,6 +118,27 @@ export class Dockersock {
             
         });         
     };
+    getChangeEmitter(){
+        class EventEmitter extends plugins.events.EventEmitter {};
+        let emitterInstance = new EventEmitter();
+        let requestStream = plugins.request.get(this.sockPath + "/events");
+        requestStream.on("response",(response) => {
+                if(response.statusCode == 200){
+                    plugins.beautylog.ok("request returned status 200, so we are good!");
+                } else {
+                    plugins.beautylog.error("request returned error: " + response.statusCode);
+                }
+            });
+        requestStream.on("data",(data:Buffer) => {
+            let status = JSON.parse(data.toString()).status;
+            plugins.beautylog.logReduced(status);
+            emitterInstance.emit("change",data);
+        });
+        requestStream.on("end",()=> {
+            
+        });
+        return emitterInstance;       
+    }
     request(methodArg:string,routeArg:string,queryArg:string = "", dataArg = {}){
         let done = plugins.q.defer();
         let jsonArg:string = JSON.stringify(dataArg);
