@@ -163,12 +163,12 @@ export class Dockersock {
         let done = plugins.q.defer();
         if(methodArg == "POST"){
             let requestStream = plugins.request.post(this.sockPath + routeArg);
-            requestStream.on("response",(response,err) => {
+            requestStream.on("response",(response) => {
                     if(response.statusCode == 200){
                         plugins.beautylog.ok("request returned status 200, so we are good!");
                     } else {
                         plugins.beautylog.error("request returned error: " + response.statusCode);
-                        done.reject(err);
+                        done.reject(response);
                     }
                 });
             requestStream.on("data",(data:Buffer) => {
