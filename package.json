@@ -28,8 +28,8 @@
   },
   "homepage": "https://gitlab.com/pushrocks/dockersock#README",
   "dependencies": {
-    "@types/es6-promise": "0.0.27-alpha",
-    "@types/q": "0.0.26-alpha",
+    "@types/es6-promise": "*",
+    "@types/q": "*",
     "beautylog": "^5.0.12",
     "es6-promise": "^3.2.1",
     "q": "^1.4.1",
