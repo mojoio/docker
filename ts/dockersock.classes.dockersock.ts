@@ -1,5 +1,6 @@
 import "typings-global"
 import * as plugins from "./dockersock.plugins";
+import {Observable} from "rxjs";
 
 export class Dockersock {
     sockPath:string;
@@ -118,9 +119,7 @@ export class Dockersock {
             
         });         
     };
-    getChangeEmitter(){
-        class EventEmitter extends plugins.events.EventEmitter {};
-        let emitterInstance = new EventEmitter();
+    getChangeObservable(){
         let requestStream = plugins.request.get(this.sockPath + "/events");
         requestStream.on("response",(response) => {
                 if(response.statusCode == 200){
@@ -129,15 +128,11 @@ export class Dockersock {
                     plugins.beautylog.error("request returned error: " + response.statusCode);
                 }
             });
-        requestStream.on("data",(data:Buffer) => {
-            let status = JSON.parse(data.toString()).status;
-            plugins.beautylog.logReduced(status);
-            emitterInstance.emit("change",data);
-        });
+        let changeObservable = Observable.fromEvent(requestStream,"data");
         requestStream.on("end",()=> {
             
         });
-        return emitterInstance;       
+        return changeObservable;
     }
     request(methodArg:string,routeArg:string,queryArg:string = "", dataArg = {}){
         let done = plugins.q.defer();
@@ -168,12 +163,12 @@ export class Dockersock {
         let done = plugins.q.defer();
         if(methodArg == "POST"){
             let requestStream = plugins.request.post(this.sockPath + routeArg);
-            requestStream.on("response",(response) => {
+            requestStream.on("response",(response,err) => {
                     if(response.statusCode == 200){
                         plugins.beautylog.ok("request returned status 200, so we are good!");
                     } else {
                         plugins.beautylog.error("request returned error: " + response.statusCode);
-                        done.reject();
+                        done.reject(err);
                     }
                 });
             requestStream.on("data",(data:Buffer) => {

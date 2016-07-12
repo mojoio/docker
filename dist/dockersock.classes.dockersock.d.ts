@@ -1,22 +1,26 @@
+/// <reference types="q" />
 import "typings-global";
+import * as plugins from "./dockersock.plugins";
+import { Observable } from "rxjs";
 export declare class Dockersock {
     sockPath: string;
     constructor(pathArg?: string);
-    auth(userArg: string, passArg: string): any;
-    listContainers(): any;
-    listContainersDetailed(): any;
-    listContainersRunning(): any;
-    listContainersStopped(): any;
-    listImages(): any;
-    listImagesDangling(): any;
-    pullImage(imageLabel: string): any;
-    createContainer(optionsArg: any, pullFirstArg?: boolean): any;
+    auth(userArg: string, passArg: string): plugins.q.Promise<{}>;
+    listContainers(): plugins.q.Promise<{}>;
+    listContainersDetailed(): plugins.q.Promise<{}>;
+    listContainersRunning(): plugins.q.Promise<{}>;
+    listContainersStopped(): plugins.q.Promise<{}>;
+    listImages(): plugins.q.Promise<{}>;
+    listImagesDangling(): plugins.q.Promise<{}>;
+    pullImage(imageLabel: string): plugins.q.Promise<{}>;
+    createContainer(optionsArg: any, pullFirstArg?: boolean): plugins.q.Promise<{}>;
     getContainerId(): void;
-    startContainer(containerNameArg: any): any;
-    stopContainer(containerNameArg: any): any;
-    removeContainer(containerNameArg: any): any;
-    clean(): any;
+    startContainer(containerNameArg: any): plugins.q.Promise<{}>;
+    stopContainer(containerNameArg: any): plugins.q.Promise<{}>;
+    removeContainer(containerNameArg: any): plugins.q.Promise<{}>;
+    clean(): plugins.q.Promise<{}>;
     callOnChange(cb: Function): void;
-    request(methodArg: string, routeArg: string, queryArg?: string, dataArg?: {}): any;
-    requestStream(methodArg: any, routeArg: any, endArg?: boolean): any;
+    getChangeObservable(): Observable<{}>;
+    request(methodArg: string, routeArg: string, queryArg?: string, dataArg?: {}): plugins.q.Promise<{}>;
+    requestStream(methodArg: any, routeArg: any, endArg?: boolean): plugins.q.Promise<{}>;
 }
