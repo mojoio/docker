@@ -12,7 +12,7 @@ export declare class Dockersock {
     listContainersStopped(): plugins.q.Promise<{}>;
     listImages(): plugins.q.Promise<{}>;
     listImagesDangling(): plugins.q.Promise<{}>;
-    pullImage(imageLabel: string): plugins.q.Promise<{}>;
+    pullImage(imageLabelArg: string): plugins.q.Promise<{}>;
     createContainer(optionsArg: any, pullFirstArg?: boolean): plugins.q.Promise<{}>;
     getContainerId(): void;
     startContainer(containerNameArg: any): plugins.q.Promise<{}>;

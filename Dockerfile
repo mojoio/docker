@@ -3,4 +3,4 @@ RUN mkdir app-node
 COPY ./ /app-node/
 WORKDIR /app-node
 ENV CI true
-CMD ["npmts"]
+CMD ["npmci","install","stable"]

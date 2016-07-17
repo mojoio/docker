@@ -57,7 +57,8 @@ export class Dockersock {
     listImagesDangling(){
         return this.request("GET","/images","?dangling=true");
     }
-    pullImage(imageLabel:string){
+    pullImage(imageLabelArg:string){
+        let imageLabel = encodeURI(imageLabelArg);
         return this.requestStream("POST","/images/create?fromImage=" + imageLabel);
     };
     createContainer(optionsArg,pullFirstArg:boolean = true){
@@ -147,13 +148,14 @@ export class Dockersock {
             },
             body:jsonArg
         };
+        console.log(options);
         plugins.request(options,(err, res, body) => {
             if (!err && res.statusCode == 200) {
                 var responseObj = JSON.parse(body);
                 done.resolve(responseObj);
             } else {
                 console.log(err);
-                console.log(res);
+                //console.log(res);
                 done.reject(err);
             };
         });
