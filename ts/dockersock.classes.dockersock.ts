@@ -148,14 +148,14 @@ export class Dockersock {
             },
             body:jsonArg
         };
-        console.log(options);
+        //console.log(options);
         plugins.request(options,(err, res, body) => {
             if (!err && res.statusCode == 200) {
                 var responseObj = JSON.parse(body);
                 done.resolve(responseObj);
             } else {
                 console.log(err);
-                //console.log(res);
+                console.log(res);
                 done.reject(err);
             };
         });
