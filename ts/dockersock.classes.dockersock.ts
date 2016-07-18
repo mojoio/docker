@@ -144,7 +144,8 @@ export class Dockersock {
             method:methodArg,
             url:this.sockPath + routeArg + suffix + queryArg,
             headers:{
-                "Content-Type":"application/json"
+                "Content-Type":"application/json",
+                "Host":"docker.sock"
             },
             body:jsonArg
         };
@@ -161,26 +162,41 @@ export class Dockersock {
         });
         return done.promise;
     }
-    requestStream(methodArg,routeArg,endArg:boolean = true){
+    requestStream(methodArg:string,routeArg:string,queryArg:string = "", dataArg = {}){
         let done = plugins.q.defer();
-        if(methodArg == "POST"){
-            let requestStream = plugins.request.post(this.sockPath + routeArg);
-            requestStream.on("response",(response) => {
-                    if(response.statusCode == 200){
-                        plugins.beautylog.ok("request returned status 200, so we are good!");
-                    } else {
-                        plugins.beautylog.error("request returned error: " + response.statusCode);
-                        done.reject(response);
-                    }
-                });
-            requestStream.on("data",(data:Buffer) => {
-                let status = JSON.parse(data.toString()).status;
-                plugins.beautylog.logReduced(status);
-            });
-            requestStream.on("end",()=> {
+        let jsonArg:string = JSON.stringify(dataArg);
+        let suffix:string = "";
+        let options = {
+            method:methodArg,
+            url:this.sockPath + routeArg + suffix + queryArg,
+            headers:{
+                "Content-Type":"application/json",
+                "Host":"docker.sock"
+            },
+            body:jsonArg
+        };
+        let requestStream = plugins.request(options,(err, res, body) => {
+            if (!err && res.statusCode == 200) {
                 done.resolve();
-            });         
-        }
+            } else {
+                console.log(err);
+                console.log(res);
+                done.reject(err);
+            };
+        });
+        requestStream.on("response",(response) => {
+                if(response.statusCode == 200){
+                    plugins.beautylog.ok("request returned status 200, so we are good!");
+                } else {
+                    plugins.beautylog.error("request returned error: " + response.statusCode);
+                    done.reject(response);
+                }
+            });
+        requestStream.on("data",(data:Buffer) => {
+            let status;
+            status = JSON.parse(data.toString()).status;
+            plugins.beautylog.logReduced(status);
+        });
         return done.promise;
     }
 }

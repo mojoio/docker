@@ -22,5 +22,5 @@ export declare class Dockersock {
     callOnChange(cb: Function): void;
     getChangeObservable(): Observable<{}>;
     request(methodArg: string, routeArg: string, queryArg?: string, dataArg?: {}): plugins.q.Promise<{}>;
-    requestStream(methodArg: any, routeArg: any, endArg?: boolean): plugins.q.Promise<{}>;
+    requestStream(methodArg: string, routeArg: string, queryArg?: string, dataArg?: {}): plugins.q.Promise<{}>;
 }
