@@ -2,5 +2,10 @@
     "npmts":{
         "mode":"default",
         "coverageTreshold":10
+    },
+    "npmdocker":{
+        "baseImage":"hosttoday/ht-docker-node:npmts",
+        "command":"npmts",
+        "dockerSock":"true"
     }
 }

@@ -1,4 +1,4 @@
-image: hosttoday/ht-docker-dbase
+image: hosttoday/ht-docker-dbase:npmts
 services:
   - docker:dind
 
