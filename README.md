@@ -1,5 +1,5 @@
 # dockersock
-easy communication with docker from node, TypeScript ready
+easy communication with docker remote api from node, TypeScript ready
 
 ## Status
 [![build status](https://gitlab.com/pushrocks/dockersock/badges/master/build.svg)](https://gitlab.com/pushrocks/dockersock/commits/master)
