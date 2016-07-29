@@ -121,7 +121,21 @@ export class Dockersock {
         });         
     };
     getChangeObservable(){
-        let requestStream = plugins.request.get(this.sockPath + "/events");
+        let options = {
+            method:"GET",
+            url:this.sockPath + "/events",
+            headers:{
+                "Content-Type":"application/json",
+                "Host":"docker.sock"
+            }
+        };
+        let requestStream = plugins.request(options,(err, res, body) => {
+            if (!err && res.statusCode == 200) {
+            } else {
+                console.log(err);
+                console.log(res);
+            };
+        });
         requestStream.on("response",(response) => {
                 if(response.statusCode == 200){
                     plugins.beautylog.ok("request returned status 200, so we are good!");
@@ -130,8 +144,7 @@ export class Dockersock {
                 }
             });
         let changeObservable = Observable.fromEvent(requestStream,"data");
-        requestStream.on("end",()=> {
-            
+        requestStream.on("end",()=> {          
         });
         return changeObservable;
     }
