@@ -35,10 +35,8 @@ describe("dockersock", function () {
         it("should return a change Objservable", function (done) {
             this.timeout(10000);
             testDockersock.getChangeObservable();
-            setTimeout(() => {
-                testDockersock.endRequests();
-                done();
-            }, 5000);
+            testDockersock.endRequests();
+            done();
         })
     });
 });

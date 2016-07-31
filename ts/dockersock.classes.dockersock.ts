@@ -220,9 +220,11 @@ export class Dockersock {
         return done.promise;
     };
     endRequests() {
-        this.requestObjectmap.forEach((itemArg: plugins.request.Request) => {
-            itemArg.emit("end");
-        });
-        this.requestObjectmap.wipe();
+        setTimeout(() => {
+            this.requestObjectmap.forEach((itemArg: plugins.request.Request) => {
+                itemArg.emit("end");
+            });
+            this.requestObjectmap.wipe();
+        }, 5000);
     };
 }
