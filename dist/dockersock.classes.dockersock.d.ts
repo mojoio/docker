@@ -4,6 +4,7 @@ import * as plugins from "./dockersock.plugins";
 import { Observable } from "rxjs";
 export declare class Dockersock {
     sockPath: string;
+    requestObjectmap: plugins.lik.Objectmap;
     constructor(pathArg?: string);
     auth(userArg: string, passArg: string): plugins.q.Promise<{}>;
     listContainers(): plugins.q.Promise<{}>;
@@ -23,4 +24,5 @@ export declare class Dockersock {
     getChangeObservable(): Observable<{}>;
     request(methodArg: string, routeArg: string, queryArg?: string, dataArg?: {}): plugins.q.Promise<{}>;
     requestStream(methodArg: string, routeArg: string, queryArg?: string, dataArg?: {}): plugins.q.Promise<{}>;
+    endRequests(): void;
 }

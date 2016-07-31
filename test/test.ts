@@ -30,7 +30,15 @@ describe("dockersock",function(){
             testDockersock.pullImage("hosttoday/ht-docker-dbase")
                 .then((dataArg)=>{
                     done();
-                },done);
+                });
+        });
+        it("should return a change Objservable",function(done){
+            this.timeout(10000);
+            testDockersock.getChangeObservable();
+            setTimeout(() => {
+                testDockersock.endRequests();
+                done();
+            },5000);
         })
     });
 });

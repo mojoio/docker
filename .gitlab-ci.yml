@@ -43,6 +43,7 @@ release:
     - priv
 
 trigger:
+  image: hosttoday/ht-docker-node:npmts
   stage: trigger
   script:
     - npmci trigger
