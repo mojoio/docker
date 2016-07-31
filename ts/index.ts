@@ -1,2 +1,2 @@
 import "typings-global";
-export {Dockersock} from "./dockersock.classes.dockersock";
+export { Dockersock } from "./dockersock.classes.dockersock";
