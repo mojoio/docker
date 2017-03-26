@@ -2,9 +2,12 @@ import "typings-global"
 import * as plugins from "./dockersock.plugins";
 import { Observable } from "rxjs";
 
+// interfaces
+import  { Objectmap } from 'lik'
+
 export class Dockersock {
     sockPath: string;
-    requestObjectmap: plugins.lik.Objectmap = new plugins.lik.Objectmap();
+    requestObjectmap = new plugins.lik.Objectmap<plugins.request.Request>();
     constructor(pathArg: string = "http://unix:/var/run/docker.sock:") {
         this.sockPath = pathArg;
     }
@@ -138,7 +141,7 @@ export class Dockersock {
             };
         });
         requestStream.on("response", (response) => {
-            this.requestObjectmap.add(response);
+            this.requestObjectmap.add(requestStream);
             if (response.statusCode == 200) {
                 plugins.beautylog.ok("request returned status 200, so we are good!");
             } else {
@@ -201,7 +204,7 @@ export class Dockersock {
             };
         });
         requestStream.on("response", (response) => {
-            this.requestObjectmap.add(response);
+            this.requestObjectmap.add(requestStream);
             if (response.statusCode == 200) {
                 plugins.beautylog.ok("request returned status 200, so we are good!");
             } else {

@@ -1,10 +1,12 @@
+/// <reference types="request" />
 /// <reference types="q" />
 import "typings-global";
 import * as plugins from "./dockersock.plugins";
 import { Observable } from "rxjs";
+import { Objectmap } from 'lik';
 export declare class Dockersock {
     sockPath: string;
-    requestObjectmap: plugins.lik.Objectmap;
+    requestObjectmap: Objectmap<plugins.request.Request>;
     constructor(pathArg?: string);
     auth(userArg: string, passArg: string): plugins.q.Promise<{}>;
     listContainers(): plugins.q.Promise<{}>;

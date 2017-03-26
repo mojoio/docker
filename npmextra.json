@@ -4,8 +4,8 @@
         "coverageTreshold":10
     },
     "npmdocker":{
-        "baseImage":"hosttoday/ht-docker-node:npmts",
-        "command":"npmts",
+        "baseImage":"hosttoday/ht-docker-node:npmci",
+        "command":"npmci command yarn global add npmts && npmci command npmts",
         "dockerSock":"true"
     }
 }

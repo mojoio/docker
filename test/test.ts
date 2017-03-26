@@ -1,42 +1,35 @@
-import "typings-test";
-import "should";
-
+import "typings-global";
 import { Dockersock } from "../dist/index";
+import { expect, tap } from 'tapbundle'
 
-describe("dockersock", function () {
-    describe(".Dockersock()", function () {
+tap.test("dockersock", function () {
+    tap.test(function () {
         let testDockersock: Dockersock;
-        it("should create a new Dockersock instance", function () {
+        tap.ok(function () {
             testDockersock = new Dockersock();
             testDockersock.should.be.instanceof(Dockersock);
-        });
-        it("should list containers", function (done) {
+        }, "should create a new Dockersock instance");
+        tap.ok("should list containers", function (done) {
             testDockersock.listContainers()
                 .then((dataArg) => {
                     console.log(dataArg);
                     done();
                 });
         });
-        it("should list detailed containers", function (done) {
-            this.timeout(5000);
+        tap.ok(function (done) {
             testDockersock.listContainersDetailed()
                 .then((dataArg) => {
                     console.log(dataArg);
                     done();
                 });
-        });
-        it("should pull an image from imagetag", function (done) {
-            this.timeout(60000);
-            testDockersock.pullImage("hosttoday/ht-docker-dbase")
-                .then((dataArg) => {
-                    done();
-                });
-        });
-        it("should return a change Objservable", function (done) {
-            this.timeout(10000);
+        }, "should list detailed containers");
+        tap.ok(function () {
+            return testDockersock.pullImage("hosttoday/ht-docker-dbase")
+        }, "should pull an image from imagetag");
+        tap.ok(function (done) {
             testDockersock.getChangeObservable();
             testDockersock.endRequests();
             done();
-        })
+        }, "should return a change Objservable")
     });
 });
