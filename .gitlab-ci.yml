@@ -19,7 +19,7 @@ before_script:
 test:
   stage: test
   script:
-    - npmci test docker
+    - npmci test stable
   tags:
     - lossless
     - priv
