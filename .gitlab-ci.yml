@@ -1,12 +1,18 @@
-image: hosttoday/ht-docker-dbase:npmts
+image: hosttoday/ht-docker-dbase:npmci
 services:
   - docker:dind
+
+cache:
+  paths:
+  - .yarn/
+  key: "$CI_BUILD_STAGE"
 
 stages:
   - build
   - test
   - release
   - trigger
+  - pages
 
 before_script:
   - npmci prepare docker-gitlab
@@ -32,7 +38,7 @@ test:
     - priv
 
 release:
-  image: hosttoday/ht-docker-node:npmts
+  image: hosttoday/ht-docker-node:npmci
   stage: release
   script:
     - npmci publish npm
@@ -43,7 +49,7 @@ release:
     - priv
 
 trigger:
-  image: hosttoday/ht-docker-node:npmts
+  image: hosttoday/ht-docker-node:npmci
   stage: trigger
   script:
     - npmci trigger
@@ -52,3 +58,18 @@ trigger:
   tags:
     - lossless
     - priv
+
+pages:
+  image: hosttoday/ht-docker-node:npmci
+  stage: pages
+  script:
+    - npmci command yarn global add npmpage
+    - npmci command npmpage --publish gitlab
+  tags:
+    - docker
+  only:
+    - tags
+  artifacts:
+    expire_in: 1 week
+    paths:
+    - public

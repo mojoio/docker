@@ -1,35 +1,34 @@
 import "typings-global";
-import { Dockersock } from "../dist/index";
 import { expect, tap } from 'tapbundle'
 
-tap.test("dockersock", function () {
-    tap.test(function () {
-        let testDockersock: Dockersock;
-        tap.ok(function () {
-            testDockersock = new Dockersock();
-            testDockersock.should.be.instanceof(Dockersock);
-        }, "should create a new Dockersock instance");
-        tap.ok("should list containers", function (done) {
-            testDockersock.listContainers()
-                .then((dataArg) => {
-                    console.log(dataArg);
-                    done();
-                });
-        });
-        tap.ok(function (done) {
-            testDockersock.listContainersDetailed()
-                .then((dataArg) => {
-                    console.log(dataArg);
-                    done();
-                });
-        }, "should list detailed containers");
-        tap.ok(function () {
-            return testDockersock.pullImage("hosttoday/ht-docker-dbase")
-        }, "should pull an image from imagetag");
-        tap.ok(function (done) {
-            testDockersock.getChangeObservable();
-            testDockersock.endRequests();
-            done();
-        }, "should return a change Objservable")
-    });
+import { Dockersock } from "../dist/index";
+
+let testDockersock: Dockersock;
+
+tap.test("should create a new Dockersock instance", async () => {
+    testDockersock = new Dockersock();
+    return expect(testDockersock).to.be.instanceof(Dockersock);
 });
+
+tap.test("should list containers", async () => {
+    await testDockersock.listContainers()
+        .then(async (dataArg) => {
+            console.log(dataArg);
+        });
+});
+
+tap.test("should list detailed containers", async () => {
+    await testDockersock.listContainersDetailed()
+        .then(async (dataArg) => {
+            console.log(dataArg);
+        });
+});
+
+tap.test("should pull an image from imagetag", async () => {
+    await testDockersock.pullImage("hosttoday/ht-docker-dbase")
+});
+
+tap.test("should return a change Objservable", async () => {
+    testDockersock.getChangeObservable();
+    testDockersock.endRequests();
+})

@@ -1,6 +1,4 @@
-docs/
-coverage/
-node_modules/
 .yarn/
+node_modules/
+coverage/
 public/
-pages/
