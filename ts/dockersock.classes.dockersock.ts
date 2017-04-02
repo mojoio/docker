@@ -124,6 +124,10 @@ export class Dockersock {
 
         });
     };
+
+    /**
+     * gets you an observable that reports changes in the docker infrastructure
+     */
     getChangeObservable() {
         let options = {
             method: "GET",
@@ -140,8 +144,10 @@ export class Dockersock {
                 console.log(res);
             };
         });
+        let incomingMessage
         requestStream.on("response", (response) => {
-            this.requestObjectmap.add(requestStream);
+            incomingMessage = response
+            this.requestObjectmap.add(incomingMessage);
             if (response.statusCode == 200) {
                 plugins.beautylog.ok("request returned status 200, so we are good!");
             } else {
@@ -150,7 +156,7 @@ export class Dockersock {
         });
         let changeObservable = Observable.fromEvent(requestStream, "data");
         requestStream.on("end", () => {
-            this.requestObjectmap.remove(requestStream);
+            this.requestObjectmap.remove(incomingMessage);
         });
         return changeObservable;
     }
@@ -203,8 +209,10 @@ export class Dockersock {
                 done.reject(err);
             };
         });
+        let incomingMessage
         requestStream.on("response", (response) => {
-            this.requestObjectmap.add(requestStream);
+            incomingMessage = response
+            this.requestObjectmap.add(incomingMessage);
             if (response.statusCode == 200) {
                 plugins.beautylog.ok("request returned status 200, so we are good!");
             } else {
@@ -218,10 +226,12 @@ export class Dockersock {
             plugins.beautylog.logReduced(status);
         });
         requestStream.on("end", () => {
-            this.requestObjectmap.remove(requestStream);
+            this.requestObjectmap.remove(incomingMessage);
         });
         return done.promise;
     };
+
+
     endRequests() {
         setTimeout(() => {
             this.requestObjectmap.forEach((itemArg: plugins.request.Request) => {

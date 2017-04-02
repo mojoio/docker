@@ -23,6 +23,9 @@ export declare class Dockersock {
     removeContainer(containerNameArg: any): plugins.q.Promise<{}>;
     clean(): plugins.q.Promise<{}>;
     callOnChange(cb: Function): void;
+    /**
+     * gets you an observable that reports changes in the docker infrastructure
+     */
     getChangeObservable(): Observable<{}>;
     request(methodArg: string, routeArg: string, queryArg?: string, dataArg?: {}): plugins.q.Promise<{}>;
     requestStream(methodArg: string, routeArg: string, queryArg?: string, dataArg?: {}): plugins.q.Promise<{}>;

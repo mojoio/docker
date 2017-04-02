@@ -5,7 +5,7 @@
     },
     "npmdocker":{
         "baseImage":"hosttoday/ht-docker-node:npmci",
-        "command":"npmci command yarn global add npmts && npmci command npmts",
+        "command":"(npmci command yarn global add npmts) && npmts",
         "dockerSock":"true"
     },
     "npmci": {
