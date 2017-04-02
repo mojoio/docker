@@ -8,7 +8,6 @@ cache:
   key: "$CI_BUILD_STAGE"
 
 stages:
-  - build
   - test
   - release
   - trigger
@@ -16,18 +15,6 @@ stages:
 
 before_script:
   - npmci prepare docker-gitlab
-
-
-build:
-  stage: build
-  script:
-    - npm install
-    - npm test
-    - npmci build docker
-  tags:
-    - lossless
-    - priv
-  
 
 test:
   stage: test
