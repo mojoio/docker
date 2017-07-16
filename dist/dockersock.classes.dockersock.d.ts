@@ -1,4 +1,3 @@
-/// <reference types="request" />
 /// <reference types="q" />
 import "typings-global";
 import * as plugins from "./dockersock.plugins";
@@ -6,7 +5,7 @@ import { Observable } from "rxjs";
 import { Objectmap } from 'lik';
 export declare class Dockersock {
     sockPath: string;
-    requestObjectmap: Objectmap<plugins.request.Request>;
+    requestObjectmap: Objectmap<any>;
     constructor(pathArg?: string);
     auth(userArg: string, passArg: string): plugins.q.Promise<{}>;
     listContainers(): plugins.q.Promise<{}>;
@@ -27,7 +26,24 @@ export declare class Dockersock {
      * gets you an observable that reports changes in the docker infrastructure
      */
     getChangeObservable(): Observable<{}>;
+    /**
+     * fire a request
+     * @param methodArg
+     * @param routeArg
+     * @param queryArg
+     * @param dataArg
+     */
     request(methodArg: string, routeArg: string, queryArg?: string, dataArg?: {}): plugins.q.Promise<{}>;
+    /**
+     * fire a streaming request
+     * @param methodArg
+     * @param routeArg
+     * @param queryArg
+     * @param dataArg
+     */
     requestStream(methodArg: string, routeArg: string, queryArg?: string, dataArg?: {}): plugins.q.Promise<{}>;
+    /**
+     * end all currently streaming requests
+     */
     endRequests(): void;
 }

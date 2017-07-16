@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "test": "npmdocker"
+    "test": "(npmts --notest && npmdocker)"
   },
   "repository": {
     "type": "git",
@@ -26,16 +26,15 @@
   "homepage": "https://gitlab.com/pushrocks/dockersock#README",
   "dependencies": {
     "@types/q": "1.x.x",
-    "@types/request": "0.x.x",
-    "beautylog": "^6.1.5",
-    "lik": "^1.0.27",
+    "beautylog": "^6.1.10",
+    "lik": "^1.0.38",
     "q": "^1.5.0",
     "request": "^2.81.0",
-    "rxjs": "^5.2.0",
-    "typings-global": "^1.0.14"
+    "rxjs": "^5.4.2",
+    "typings-global": "^1.0.19"
   },
   "devDependencies": {
     "observable-to-promise": "^0.5.0",
-    "tapbundle": "^1.0.5"
+    "tapbundle": "^1.1.1"
   }
 }
