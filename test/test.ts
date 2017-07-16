@@ -24,7 +24,7 @@ tap.test("should pull an image from imagetag", async () => {
     await testDockersock.pullImage("hosttoday/ht-docker-node:npmci")
 })
 
-tap.test("should return a change Objservable", async () => {
+tap.skip.test("should return a change Objservable", async () => {
     let myObservable = testDockersock.getChangeObservable();
     testDockersock.endRequests();
     let testPromise = observableToPromise(myObservable)
