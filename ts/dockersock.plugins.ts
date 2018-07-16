@@ -1,6 +1,6 @@
-import "typings-global";
-export import beautylog = require("beautylog");
-export import lik = require("lik");
-export import q = require("q");
-export import request = require("request");
-export import rxjs = require("rxjs");
+import 'typings-global';
+export import smartlog = require('@pushrocks/smartlog');
+export import lik = require('@pushrocks/lik');
+export import smartpromise = require('@pushrocks/smartpromise');
+export import smartrequest = require('@pushrocks/smartrequest');
+export import rxjs = require('rxjs');

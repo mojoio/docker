@@ -1,13 +1,16 @@
-# dockersock
+# @mojoio/dockersock
+
 easy communication with docker remote api from node, TypeScript ready
 
 ## Availabililty
+
 [![npm](https://mojoio.gitlab.io/assets/repo-button-npm.svg)](https://www.npmjs.com/package/dockersock)
 [![git](https://mojoio.gitlab.io/assets/repo-button-git.svg)](https://GitLab.com/mojoio/dockersock)
 [![git](https://mojoio.gitlab.io/assets/repo-button-mirror.svg)](https://github.com/mojoio/dockersock)
 [![docs](https://mojoio.gitlab.io/assets/repo-button-docs.svg)](https://mojoio.gitlab.io/dockersock/)
 
 ## Status for master
+
 [![build status](https://GitLab.com/mojoio/dockersock/badges/master/build.svg)](https://GitLab.com/mojoio/dockersock/commits/master)
 [![coverage report](https://GitLab.com/mojoio/dockersock/badges/master/coverage.svg)](https://GitLab.com/mojoio/dockersock/commits/master)
 [![npm downloads per month](https://img.shields.io/npm/dm/dockersock.svg)](https://www.npmjs.com/package/dockersock)
@@ -19,6 +22,7 @@ easy communication with docker remote api from node, TypeScript ready
 [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
 ## Usage
+
 Use TypeScript for best in class instellisense.
 
 ```TypeScript
@@ -38,12 +42,11 @@ myDockersock.startContainer({ // starts a already present container
 myDockersock.newContainer({ // start new Container, equals "docker run" shell command
     image: "someimagetag"
 })
-
 ```
 
 For further information read the linked docs at the top of this README.
 
 > MIT licensed | **&copy;** [Lossless GmbH](https://lossless.gmbh)
-| By using this npm module you agree to our [privacy policy](https://lossless.gmbH/privacy.html)
+> | By using this npm module you agree to our [privacy policy](https://lossless.gmbH/privacy.html)
 
 [![repo-footer](https://mojoio.gitlab.io/assets/repo-footer.svg)](https://mojo.io)

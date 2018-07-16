@@ -1,17 +1,15 @@
 {
-    "npmts":{
-        "mode":"default",
-        "coverageTreshold":10
-    },
-    "npmdocker":{
-        "baseImage":"hosttoday/ht-docker-node:npmci",
-        "command":"(ls -a && rm -r node_modules && yarn global add npmts && yarn install && npmts)",
-        "dockerSock": true
-    },
-    "npmci": {
-        "globalNpmTools": [
-            "npmts",
-            "npmdocker"
-        ]
-    }
+  "npmts": {
+    "mode": "default",
+    "coverageTreshold": 10
+  },
+  "npmdocker": {
+    "baseImage": "hosttoday/ht-docker-node:npmci",
+    "command":
+      "(ls -a && rm -r node_modules && yarn global add npmts && yarn install && npmts)",
+    "dockerSock": true
+  },
+  "npmci": {
+    "globalNpmTools": ["npmts", "npmdocker"]
+  }
 }

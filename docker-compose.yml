@@ -1,18 +1,18 @@
 nginx1 :
   image: "nginx"
   environment:
-      VIRTUAL_HOST: "test100.labkomp.de"
+      VIRTUAL_HOST: "test100.bleu.de"
   restart: always
   container_name: nginx1
 nginx2:
   image: nginx
   environment:
-    VIRTUAL_HOST: "test101.labkomp.de"
+    VIRTUAL_HOST: "test101.bleu.de"
   restart: always
   container_name: nginx2
-npmts-test-container:
-  image: "npmts-test-image"
-  volumes:
-    - "/var/run/docker.sock:/var/run/docker.sock"
+nginx3:
+  image: nginx
+  environment:
+    VIRTUAL_HOST: "test101.bleu.de"
   restart: always
-  container_name: npmts-test-container
+  container_name: nginx3

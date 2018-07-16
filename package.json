@@ -1,11 +1,12 @@
 {
-  "name": "dockersock",
+  "name": "@mojoio/docker",
   "version": "1.0.23",
   "description": "easy communication with docker remote api from node, TypeScript ready",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "test": "(npmts --notest && npmdocker)"
+    "test": "tsrun test/test.ts",
+    "build": "(npmts --notest && npmdocker)"
   },
   "repository": {
     "type": "git",
@@ -25,16 +26,14 @@
   },
   "homepage": "https://gitlab.com/pushrocks/dockersock#README",
   "dependencies": {
-    "@types/q": "1.x.x",
-    "beautylog": "^6.1.10",
-    "lik": "^1.0.38",
-    "q": "^1.5.0",
-    "request": "^2.81.0",
-    "rxjs": "^5.4.2",
-    "typings-global": "^1.0.19"
+    "@pushrocks/lik": "^3.0.1",
+    "@pushrocks/smartlog": "^2.0.1",
+    "@pushrocks/smartpromise": "^2.0.5",
+    "@pushrocks/smartrequest": "^1.0.17",
+    "rxjs": "^6.2.2"
   },
   "devDependencies": {
-    "observable-to-promise": "^0.5.0",
-    "tapbundle": "^1.1.1"
-  }
+    "@pushrocks/tapbundle": "^3.0.1"
+  },
+  "private": false
 }
