@@ -1,5 +1,5 @@
-import * as plugins from "./dockersock.plugins";
-import { DockerContainer } from "./docker.classes.container";
+import * as plugins from './dockersock.plugins';
+import { DockerContainer } from './docker.classes.container';
 
 export class DockerHost {
   /**
@@ -16,7 +16,7 @@ export class DockerHost {
    * the constructor to instantiate a new docker sock instance
    * @param pathArg
    */
-  constructor(pathArg: string = "http://unix:/var/run/docker.sock:") {
+  constructor(pathArg: string = 'http://unix:/var/run/docker.sock:') {
     this.sockPath = pathArg;
   }
 
@@ -27,7 +27,7 @@ export class DockerHost {
    */
   auth(registryArg: string, userArg: string, passArg: string) {
     let done = plugins.smartpromise.defer();
-    this.request("POST", "");
+    this.request('POST', '');
     return done.promise;
   }
 
@@ -43,16 +43,16 @@ export class DockerHost {
    * fire a request
    */
   async request(methodArg: string, routeArg: string, dataArg = {}) {
-    const requestUrl = `${this.sockPath}${routeArg}`
+    const requestUrl = `${this.sockPath}${routeArg}`;
     console.log(requestUrl);
     const response = await plugins.smartrequest.request(requestUrl, {
       method: methodArg,
       headers: {
-        "Content-Type": "application/json",
-        "Host": "docker.sock"
+        'Content-Type': 'application/json',
+        Host: 'docker.sock'
       },
       requestBody: dataArg
     });
-    return response
+    return response;
   }
 }

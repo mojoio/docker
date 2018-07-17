@@ -29,10 +29,11 @@
     "@pushrocks/lik": "^3.0.1",
     "@pushrocks/smartlog": "^2.0.1",
     "@pushrocks/smartpromise": "^2.0.5",
-    "@pushrocks/smartrequest": "^1.0.17",
+    "@pushrocks/smartrequest": "^1.1.1",
     "rxjs": "^6.2.2"
   },
   "devDependencies": {
+    "@gitzone/tsrun": "^1.1.9",
     "@pushrocks/tapbundle": "^3.0.1"
   },
   "private": false
