@@ -1,8 +1,4 @@
 {
-  "npmts": {
-    "mode": "default",
-    "coverageTreshold": 10
-  },
   "npmdocker": {
     "baseImage": "hosttoday/ht-docker-node:npmci",
     "command":
@@ -10,6 +6,8 @@
     "dockerSock": true
   },
   "npmci": {
-    "globalNpmTools": ["npmts", "npmdocker"]
+    "npmGlobalTools": [],
+    "npmAccessLevel": "public",
+    "npmRegistryUrl": "registry.gitlab.com"
   }
 }

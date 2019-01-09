@@ -2,11 +2,12 @@
   "name": "@mojoio/docker",
   "version": "1.0.27",
   "description": "easy communication with docker remote api from node, TypeScript ready",
+  "private": false,
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "test": "tsrun test/test.ts",
-    "build": "(npmts --notest && npmdocker)"
+    "test": "tstest test/",
+    "build": "tsbuild"
   },
   "repository": {
     "type": "git",
@@ -33,11 +34,12 @@
     "rxjs": "^6.3.3"
   },
   "devDependencies": {
+    "@gitzone/tsbuild": "^2.1.4",
     "@gitzone/tsrun": "^1.1.17",
+    "@gitzone/tstest": "^1.0.18",
     "@pushrocks/tapbundle": "^3.0.7",
     "@types/node": "^10.12.18",
     "tslint": "^5.12.0",
     "tslint-config-prettier": "^1.17.0"
-  },
-  "private": false
+  }
 }
