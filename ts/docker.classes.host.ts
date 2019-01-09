@@ -37,6 +37,18 @@ export class DockerHost {
   async getContainers() {
     const containerArray = await DockerContainer.getContainers(this);
     return containerArray;
+  };
+
+  async getEventObservable(): Promise<plugins.rxjs.Observable<any>> {
+    const response = await this.requestStreaming('GET', '/events');
+    return plugins.rxjs.Observable.create(observer => {
+      response.on('data', data => {
+        observer.next(data.toString());
+      });
+      return () => {
+        response.emit('end');
+      };
+    });
   }
 
   /**
@@ -44,7 +56,6 @@ export class DockerHost {
    */
   async request(methodArg: string, routeArg: string, dataArg = {}) {
     const requestUrl = `${this.sockPath}${routeArg}`;
-    console.log(requestUrl);
     const response = await plugins.smartrequest.request(requestUrl, {
       method: methodArg,
       headers: {
@@ -53,6 +64,24 @@ export class DockerHost {
       },
       requestBody: dataArg
     });
+    return response;
+  }
+
+  async requestStreaming(methodArg: string, routeArg: string, dataArg = {}) {
+    const requestUrl = `${this.sockPath}${routeArg}`;
+    const response = await plugins.smartrequest.request(
+      requestUrl, {
+      method: methodArg,
+      headers: {
+        // 'Content-Type': 'application/json',
+        Host: 'docker.sock'
+      },
+      requestBody: null
+    },
+    true
+    );
+    console.log(response.statusCode);
+    console.log(response.body);
     return response;
   }
 }

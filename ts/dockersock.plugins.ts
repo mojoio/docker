@@ -1,6 +1,19 @@
-import 'typings-global';
-export import smartlog = require('@pushrocks/smartlog');
-export import lik = require('@pushrocks/lik');
-export import smartpromise = require('@pushrocks/smartpromise');
-export import smartrequest = require('@pushrocks/smartrequest');
-export import rxjs = require('rxjs');
+// @pushrocks scope
+import * as lik from '@pushrocks/lik';
+import * as smartlog from '@pushrocks/smartlog';
+import * as smartpromise from '@pushrocks/smartpromise';
+import * as smartrequest from '@pushrocks/smartrequest';
+
+export {
+  lik,
+  smartlog,
+  smartpromise,
+  smartrequest
+};
+
+// third party
+import * as rxjs from 'rxjs';
+
+export {
+  rxjs
+};

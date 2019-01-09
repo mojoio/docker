@@ -13,16 +13,18 @@ tap.test('should list containers', async () => {
   console.log(containers);
 });
 
-/*
-tap.test('should pull an image from imagetag', async () => {
-  await testDockerHost.pullImage('hosttoday/ht-docker-node:npmci');
+
+tap.skip.test('should pull an image from imagetag', async () => {
+  // await testDockerHost.pullImage('hosttoday/ht-docker-node:npmci');
 });
 
-tap.skip.test('should return a change Objservable', async () => {
-  let myObservable = testDockerHost.getChangeObservable();
-  testDockerHost.endRequests();
-  let testPromise = observableToPromise(myObservable);
-  return await expect(testPromise).to.eventually.be.fulfilled;
-}); */
+tap.test('should return a change Objservable', async (tools) => {
+  const testObservable = await testDockerHost.getEventObservable();
+  const subscription = testObservable.subscribe(changeObject => {
+    console.log(changeObject);
+  });
+  await tools.delayFor(2000);
+  subscription.unsubscribe();
+});
 
 tap.start();
