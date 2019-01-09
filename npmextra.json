@@ -8,6 +8,6 @@
   "npmci": {
     "npmGlobalTools": [],
     "npmAccessLevel": "public",
-    "npmRegistryUrl": "registry.gitlab.com"
+    "npmRegistryUrl": "registry.npmjs.org"
   }
 }
