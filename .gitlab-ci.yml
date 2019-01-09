@@ -65,6 +65,8 @@ sast:
     
 testSTABLE:
   image: hosttoday/ht-docker-dbase:npmci
+  services:
+  - docker:dind
   stage: test
   script:
   - npmci npm prepare
