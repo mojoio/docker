@@ -21,12 +21,10 @@ export class DockerContainer {
   }
 
   /**
-   * 
+   *
    * @param containerId
    */
-  static async getContainerById(containerId: string) {
-
-  }
+  static async getContainerById(containerId: string) {}
   static async create() {}
 
   // ========
@@ -36,7 +34,7 @@ export class DockerContainer {
   constructor(dockerContainerObjectArg: any) {
     Object.keys(dockerContainerObjectArg).forEach(keyArg => {
       this[keyArg] = dockerContainerObjectArg[keyArg];
-    })
+    });
   }
 
   Id: string;

@@ -37,7 +37,7 @@ export class DockerHost {
   async getContainers() {
     const containerArray = await DockerContainer.getContainers(this);
     return containerArray;
-  };
+  }
 
   async getEventObservable(): Promise<plugins.rxjs.Observable<any>> {
     const response = await this.requestStreaming('GET', '/events');
@@ -70,15 +70,16 @@ export class DockerHost {
   async requestStreaming(methodArg: string, routeArg: string, dataArg = {}) {
     const requestUrl = `${this.sockPath}${routeArg}`;
     const response = await plugins.smartrequest.request(
-      requestUrl, {
-      method: methodArg,
-      headers: {
-        // 'Content-Type': 'application/json',
-        Host: 'docker.sock'
+      requestUrl,
+      {
+        method: methodArg,
+        headers: {
+          // 'Content-Type': 'application/json',
+          Host: 'docker.sock'
+        },
+        requestBody: null
       },
-      requestBody: null
-    },
-    true
+      true
     );
     console.log(response.statusCode);
     console.log(response.body);
