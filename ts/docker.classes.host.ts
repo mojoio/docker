@@ -43,7 +43,13 @@ export class DockerHost {
     const response = await this.requestStreaming('GET', '/events');
     return plugins.rxjs.Observable.create(observer => {
       response.on('data', data => {
-        observer.next(data.toString());
+        const eventString = data.toString();
+        try {
+          const eventObject = JSON.parse(eventString);
+          observer.next(eventObject);
+        } catch (e) {
+          console.log(e);
+        }
       });
       return () => {
         response.emit('end');
