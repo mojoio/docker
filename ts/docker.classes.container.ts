@@ -11,9 +11,11 @@ export class DockerContainer {
   /**
    * get all containers
    */
-  static async getContainers(dockerHostArg: DockerHost): Promise<DockerContainer[]> {
+  public static async getContainers(dockerHostArg: DockerHost): Promise<DockerContainer[]> {
     const result: DockerContainer[] = [];
     const response = await dockerHostArg.request('GET', '/containers/json');
+
+    // TODO: Think about getting the config by inpsecting the container
     for (const containerResult of response.body) {
       result.push(new DockerContainer(containerResult));
     }
@@ -21,11 +23,17 @@ export class DockerContainer {
   }
 
   /**
-   *
+   * gets an container by Id
    * @param containerId
    */
-  static async getContainerById(containerId: string) {}
-  static async create() {}
+  public static async getContainerById(containerId: string) {}
+
+  /**
+   * create a container
+   */
+  public static async create(creationSpecifier: interfaces.IContainerCreationSpecifier) {
+
+  }
 
   // ========
   // INSTANCE
