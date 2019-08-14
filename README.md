@@ -20,7 +20,7 @@ unofficial docker engine api abstraction package written in TypeScript
 
 Use TypeScript for best in class instellisense.
 
-```TypeScript
+```typescript
 import {Dockersock} from "dockersock"; // require Dockersock class
 
 let myDockersock = new Dockersock(); // optional: you can pass a domain to the contructor, defaults to  /var/run/docker.sock
