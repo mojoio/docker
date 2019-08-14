@@ -4,9 +4,7 @@ import * as interfaces from './interfaces';
 import { DockerHost } from './docker.classes.host';
 
 export class DockerContainer {
-  // ======
   // STATIC
-  // ======
 
   /**
    * get all containers
@@ -26,35 +24,36 @@ export class DockerContainer {
    * gets an container by Id
    * @param containerId
    */
-  public static async getContainerById(containerId: string) {}
+  public static async getContainerById(containerId: string) {
+    // TODO: implement get container by id
+  }
 
   /**
    * create a container
    */
-  public static async create(creationSpecifier: interfaces.IContainerCreationSpecifier) {}
+  public static async create(dockerHost: DockerHost, containerCreationDescriptor: interfaces.IContainerCreationDescriptor) {
+    // TODO implement creating a container
+  }
 
-  // ========
   // INSTANCE
-  // ========
-
   constructor(dockerContainerObjectArg: any) {
     Object.keys(dockerContainerObjectArg).forEach(keyArg => {
       this[keyArg] = dockerContainerObjectArg[keyArg];
     });
   }
 
-  Id: string;
-  Names: string[];
-  Image: string;
-  ImageID: string;
-  Command: string;
-  Created: number;
-  Ports: interfaces.TPorts;
-  Labels: interfaces.TLabels;
-  State: string;
-  Status: string;
-  HostConfig: any;
-  NetworkSettings: {
+  public Id: string;
+  public Names: string[];
+  public Image: string;
+  public ImageID: string;
+  public Command: string;
+  public Created: number;
+  public Ports: interfaces.TPorts;
+  public Labels: interfaces.TLabels;
+  public State: string;
+  public Status: string;
+  public HostConfig: any;
+  public NetworkSettings: {
     Networks: {
       [key: string]: {
         IPAMConfig: any;
@@ -73,5 +72,5 @@ export class DockerContainer {
       };
     };
   };
-  Mounts: any;
+  public Mounts: any;
 }

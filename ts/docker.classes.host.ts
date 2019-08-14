@@ -1,23 +1,19 @@
 import * as plugins from './dockersock.plugins';
 import { DockerContainer } from './docker.classes.container';
+import { DockerNetwork } from './docker.classes.network';
 
 export class DockerHost {
   /**
    * the path where the docker sock can be found
    */
-  sockPath: string;
-
-  /**
-   * keeping track of currently active requests to safely end this module at any time
-   */
-  requestObjectmap = new plugins.lik.Objectmap<any>();
+  public socketPath: string;
 
   /**
    * the constructor to instantiate a new docker sock instance
    * @param pathArg
    */
   constructor(pathArg: string = 'http://unix:/var/run/docker.sock:') {
-    this.sockPath = pathArg;
+    this.socketPath = pathArg;
   }
 
   /**
@@ -25,21 +21,27 @@ export class DockerHost {
    * @param userArg
    * @param passArg
    */
-  auth(registryArg: string, userArg: string, passArg: string) {
-    let done = plugins.smartpromise.defer();
-    this.request('POST', '');
-    return done.promise;
+  public async auth(registryArg: string, userArg: string, passArg: string) {
+    // TODO: implement Docker Registry authentication
+    await this.request('POST', '');
   }
 
   /**
-   *
+   * gets all networks
    */
-  async getContainers() {
+  public async getNetworks() {
+    DockerNetwork.getNetworks(this);
+  }
+
+  /**
+   * gets all containers
+   */
+  public async getContainers() {
     const containerArray = await DockerContainer.getContainers(this);
     return containerArray;
   }
 
-  async getEventObservable(): Promise<plugins.rxjs.Observable<any>> {
+  public async getEventObservable(): Promise<plugins.rxjs.Observable<any>> {
     const response = await this.requestStreaming('GET', '/events');
     return plugins.rxjs.Observable.create(observer => {
       response.on('data', data => {
@@ -60,8 +62,8 @@ export class DockerHost {
   /**
    * fire a request
    */
-  async request(methodArg: string, routeArg: string, dataArg = {}) {
-    const requestUrl = `${this.sockPath}${routeArg}`;
+  public async request(methodArg: string, routeArg: string, dataArg = {}) {
+    const requestUrl = `${this.socketPath}${routeArg}`;
     const response = await plugins.smartrequest.request(requestUrl, {
       method: methodArg,
       headers: {
@@ -73,8 +75,8 @@ export class DockerHost {
     return response;
   }
 
-  async requestStreaming(methodArg: string, routeArg: string, dataArg = {}) {
-    const requestUrl = `${this.sockPath}${routeArg}`;
+  public async requestStreaming(methodArg: string, routeArg: string, dataArg = {}) {
+    const requestUrl = `${this.socketPath}${routeArg}`;
     const response = await plugins.smartrequest.request(
       requestUrl,
       {
