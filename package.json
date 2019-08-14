@@ -41,5 +41,16 @@
     "@types/node": "^12.7.1",
     "tslint": "^5.18.0",
     "tslint-config-prettier": "^1.18.0"
-  }
+  },
+  "files": [
+    "ts/*",
+    "ts_web/*",
+    "dist/*",
+    "dist_web/*",
+    "dist_ts_web/*",
+    "assets/*",
+    "cli.js",
+    "npmextra.json",
+    "readme.md"
+  ]
 }

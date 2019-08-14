@@ -3,7 +3,10 @@ import { DockerHost } from './docker.classes.host';
 
 export class DockerImage {
   // STATIC
-  public static async createFromRegistry(dockerHostArg: DockerHost, dockerImageTag): Promise<DockerImage> {
+  public static async createFromRegistry(
+    dockerHostArg: DockerHost,
+    dockerImageTag
+  ): Promise<DockerImage> {
     const resultingImage = new DockerImage();
 
     return resultingImage;
@@ -20,18 +23,16 @@ export class DockerImage {
   /**
    * returns a boolean wether the image has a upstream image
    */
-  public isUpstreamImage (): boolean {
+  public isUpstreamImage(): boolean {
     // TODO: implement isUpastreamImage
-    return true;
-  };
-
-  /**
-   * 
-   */
-  public async pullLatestImageFromRegistry() : Promise<boolean> {
-    // TODO: implement pullLatestImageFromRegistry
     return true;
   }
 
-  
+  /**
+   *
+   */
+  public async pullLatestImageFromRegistry(): Promise<boolean> {
+    // TODO: implement pullLatestImageFromRegistry
+    return true;
+  }
 }

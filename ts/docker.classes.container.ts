@@ -31,9 +31,7 @@ export class DockerContainer {
   /**
    * create a container
    */
-  public static async create(creationSpecifier: interfaces.IContainerCreationSpecifier) {
-
-  }
+  public static async create(creationSpecifier: interfaces.IContainerCreationSpecifier) {}
 
   // ========
   // INSTANCE

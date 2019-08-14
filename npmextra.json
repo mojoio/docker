@@ -1,13 +1,22 @@
 {
   "npmdocker": {
     "baseImage": "hosttoday/ht-docker-node:npmci",
-    "command":
-      "(ls -a && rm -r node_modules && yarn global add npmts && yarn install && npmts)",
+    "command": "(ls -a && rm -r node_modules && yarn global add npmts && yarn install && npmts)",
     "dockerSock": true
   },
   "npmci": {
     "npmGlobalTools": [],
     "npmAccessLevel": "public",
     "npmRegistryUrl": "registry.npmjs.org"
+  },
+  "gitzone": {
+    "module": {
+      "githost": "gitlab.com",
+      "gitscope": "mojoio",
+      "gitrepo": "docker",
+      "shortDescription": "unofficial docker engine api abstraction package written in TypeScript",
+      "npmPackagename": "@mojoio/docker",
+      "license": "MIT"
+    }
   }
 }

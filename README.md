@@ -1,25 +1,20 @@
-# @mojoio/dockersock
+# @mojoio/docker
+unofficial docker engine api abstraction package written in TypeScript
 
-easy communication with docker remote api from node, TypeScript ready
-
-## Availabililty
-
-[![npm](https://mojoio.gitlab.io/assets/repo-button-npm.svg)](https://www.npmjs.com/package/dockersock)
-[![git](https://mojoio.gitlab.io/assets/repo-button-git.svg)](https://GitLab.com/mojoio/dockersock)
-[![git](https://mojoio.gitlab.io/assets/repo-button-mirror.svg)](https://github.com/mojoio/dockersock)
-[![docs](https://mojoio.gitlab.io/assets/repo-button-docs.svg)](https://mojoio.gitlab.io/dockersock/)
+## Availabililty and Links
+* [npmjs.org (npm package)](https://www.npmjs.com/package/@mojoio/docker)
+* [gitlab.com (source)](https://gitlab.com/mojoio/docker)
+* [github.com (source mirror)](https://github.com/mojoio/docker)
+* [docs (typedoc)](https://mojoio.gitlab.io/docker/)
 
 ## Status for master
-
-[![build status](https://GitLab.com/mojoio/dockersock/badges/master/build.svg)](https://GitLab.com/mojoio/dockersock/commits/master)
-[![coverage report](https://GitLab.com/mojoio/dockersock/badges/master/coverage.svg)](https://GitLab.com/mojoio/dockersock/commits/master)
-[![npm downloads per month](https://img.shields.io/npm/dm/dockersock.svg)](https://www.npmjs.com/package/dockersock)
-[![Dependency Status](https://david-dm.org/mojoio/dockersock.svg)](https://david-dm.org/mojoio/dockersock)
-[![bitHound Dependencies](https://www.bithound.io/github/mojoio/dockersock/badges/dependencies.svg)](https://www.bithound.io/github/mojoio/dockersock/master/dependencies/npm)
-[![bitHound Code](https://www.bithound.io/github/mojoio/dockersock/badges/code.svg)](https://www.bithound.io/github/mojoio/dockersock)
-[![TypeScript](https://img.shields.io/badge/TypeScript-2.x-blue.svg)](https://nodejs.org/dist/latest-v6.x/docs/api/)
-[![node](https://img.shields.io/badge/node->=%206.x.x-blue.svg)](https://nodejs.org/dist/latest-v6.x/docs/api/)
-[![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+[![build status](https://gitlab.com/mojoio/docker/badges/master/build.svg)](https://gitlab.com/mojoio/docker/commits/master)
+[![coverage report](https://gitlab.com/mojoio/docker/badges/master/coverage.svg)](https://gitlab.com/mojoio/docker/commits/master)
+[![npm downloads per month](https://img.shields.io/npm/dm/@mojoio/docker.svg)](https://www.npmjs.com/package/@mojoio/docker)
+[![Known Vulnerabilities](https://snyk.io/test/npm/@mojoio/docker/badge.svg)](https://snyk.io/test/npm/@mojoio/docker)
+[![TypeScript](https://img.shields.io/badge/TypeScript->=%203.x-blue.svg)](https://nodejs.org/dist/latest-v10.x/docs/api/)
+[![node](https://img.shields.io/badge/node->=%2010.x.x-blue.svg)](https://nodejs.org/dist/latest-v10.x/docs/api/)
+[![JavaScript Style Guide](https://img.shields.io/badge/code%20style-prettier-ff69b4.svg)](https://prettier.io/)
 
 ## Usage
 
@@ -50,3 +45,10 @@ For further information read the linked docs at the top of this README.
 > | By using this npm module you agree to our [privacy policy](https://lossless.gmbH/privacy.html)
 
 [![repo-footer](https://mojoio.gitlab.io/assets/repo-footer.svg)](https://mojo.io)
+
+For further information read the linked docs at the top of this readme.
+
+> MIT licensed | **&copy;** [Lossless GmbH](https://lossless.gmbh)
+| By using this npm module you agree to our [privacy policy](https://lossless.gmbH/privacy)
+
+[![repo-footer](https://lossless.gitlab.io/publicrelations/repofooter.svg)](https://maintainedby.lossless.com)
