@@ -1,7 +1,7 @@
 import { DockerNetwork } from '../docker.classes.network';
 
 export interface IContainerCreationDescriptor {
-  hostname: string;
-  domainName: string;
+  Hostname: string;
+  Domainname: string;
   networks?: DockerNetwork[];
 }

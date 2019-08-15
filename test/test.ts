@@ -1,23 +1,49 @@
 import { expect, tap } from '@pushrocks/tapbundle';
-import { DockerHost } from '../ts/index';
+import * as docker from '../ts/index';
 
-let testDockerHost: DockerHost;
+let testDockerHost: docker.DockerHost;
 
 tap.test('should create a new Dockersock instance', async () => {
-  testDockerHost = new DockerHost();
-  return expect(testDockerHost).to.be.instanceof(DockerHost);
+  testDockerHost = new docker.DockerHost();
+  return expect(testDockerHost).to.be.instanceof(docker.DockerHost);
 });
 
+// Containers
 tap.test('should list containers', async () => {
   const containers = await testDockerHost.getContainers();
   console.log(containers);
 });
 
-tap.skip.test('should pull an image from imagetag', async () => {
-  // await testDockerHost.pullImage('hosttoday/ht-docker-node:npmci');
+// Networks
+tap.test('should list networks', async () => {
+  const networks = await testDockerHost.getNetworks();
+  console.log(networks);
 });
 
-tap.test('should return a change Objservable', async tools => {
+tap.test('should create a network', async () => {
+  const newNetwork = await docker.DockerNetwork.createNetwork(testDockerHost, {
+    Name: 'webgateway'
+  });
+  expect(newNetwork).to.be.instanceOf(docker.DockerNetwork);
+  expect(newNetwork.Name).to.equal('webgateway');
+});
+
+tap.test('should remove a network', async () => {
+  const webgateway = await docker.DockerNetwork.getNetworkByName(testDockerHost, 'webgateway');
+  await webgateway.remove();
+});
+
+// Images
+tap.test('should pull an image from imagetag', async () => {
+  const image = await docker.DockerImage.createFromRegistry(testDockerHost, {
+    imageUrl: 'hosttoday/ht-docker-node',
+    tag: 'alpine'
+  });
+  expect(image).to.be.instanceOf(docker.DockerImage);
+  console.log(image);
+});
+
+tap.test('should return a change Observable', async tools => {
   const testObservable = await testDockerHost.getEventObservable();
   const subscription = testObservable.subscribe(changeObject => {
     console.log(changeObject);

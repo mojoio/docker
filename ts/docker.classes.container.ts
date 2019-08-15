@@ -1,4 +1,4 @@
-import * as plugins from './dockersock.plugins';
+import * as plugins from './docker.plugins';
 import * as interfaces from './interfaces';
 
 import { DockerHost } from './docker.classes.host';
@@ -15,7 +15,7 @@ export class DockerContainer {
 
     // TODO: Think about getting the config by inpsecting the container
     for (const containerResult of response.body) {
-      result.push(new DockerContainer(containerResult));
+      result.push(new DockerContainer(dockerHostArg, containerResult));
     }
     return result;
   }
@@ -31,17 +31,33 @@ export class DockerContainer {
   /**
    * create a container
    */
-  public static async create(dockerHost: DockerHost, containerCreationDescriptor: interfaces.IContainerCreationDescriptor) {
-    // TODO implement creating a container
+  public static async create(
+    dockerHost: DockerHost,
+    containerCreationDescriptor: interfaces.IContainerCreationDescriptor
+  ) {
+    // check for unique hostname
+    const existingContainers = await DockerContainer.getContainers(dockerHost);
+    const sameHostNameContainer = existingContainers.find(container => {
+      // TODO implement HostName Detection;
+      return false;
+    });
+    const response = await dockerHost.request('POST', '/containers/create', {
+      Hostname: containerCreationDescriptor.Hostname,
+      Domainname: containerCreationDescriptor.Domainname,
+      User: 'root'
+    });
+    if (response.statusCode < 300) {
+      plugins.smartlog.defaultLogger.log('info', 'Container created successfully');
+    } else {
+      plugins.smartlog.defaultLogger.log('error', 'There has been a problem when creating the container');
+    }
   }
 
   // INSTANCE
-  constructor(dockerContainerObjectArg: any) {
-    Object.keys(dockerContainerObjectArg).forEach(keyArg => {
-      this[keyArg] = dockerContainerObjectArg[keyArg];
-    });
-  }
+  // references
+  public dockerHost: DockerHost;
 
+  // properties
   public Id: string;
   public Names: string[];
   public Image: string;
@@ -73,4 +89,10 @@ export class DockerContainer {
     };
   };
   public Mounts: any;
+  constructor(dockerHostArg: DockerHost, dockerContainerObjectArg: any) {
+    this.dockerHost = dockerHostArg;
+    Object.keys(dockerContainerObjectArg).forEach(keyArg => {
+      this[keyArg] = dockerContainerObjectArg[keyArg];
+    });
+  }
 }

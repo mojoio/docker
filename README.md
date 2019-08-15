@@ -1,16 +1,13 @@
 # @mojoio/docker
-
 unofficial docker engine api abstraction package written in TypeScript
 
 ## Availabililty and Links
-
-- [npmjs.org (npm package)](https://www.npmjs.com/package/@mojoio/docker)
-- [gitlab.com (source)](https://gitlab.com/mojoio/docker)
-- [github.com (source mirror)](https://github.com/mojoio/docker)
-- [docs (typedoc)](https://mojoio.gitlab.io/docker/)
+* [npmjs.org (npm package)](https://www.npmjs.com/package/@mojoio/docker)
+* [gitlab.com (source)](https://gitlab.com/mojoio/docker)
+* [github.com (source mirror)](https://github.com/mojoio/docker)
+* [docs (typedoc)](https://mojoio.gitlab.io/docker/)
 
 ## Status for master
-
 [![build status](https://gitlab.com/mojoio/docker/badges/master/build.svg)](https://gitlab.com/mojoio/docker/commits/master)
 [![coverage report](https://gitlab.com/mojoio/docker/badges/master/coverage.svg)](https://gitlab.com/mojoio/docker/commits/master)
 [![npm downloads per month](https://img.shields.io/npm/dm/@mojoio/docker.svg)](https://www.npmjs.com/package/@mojoio/docker)
@@ -36,6 +33,6 @@ const run = async () => {
 For further information read the linked docs at the top of this readme.
 
 > MIT licensed | **&copy;** [Lossless GmbH](https://lossless.gmbh)
-> | By using this npm module you agree to our [privacy policy](https://lossless.gmbH/privacy)
+| By using this npm module you agree to our [privacy policy](https://lossless.gmbH/privacy)
 
 [![repo-footer](https://lossless.gitlab.io/publicrelations/repofooter.svg)](https://maintainedby.lossless.com)
