@@ -38,7 +38,6 @@ export class DockerImage {
       const originTag = `${creationObject.imageUrl}:${creationObject.tag}`;
       console.log(originTag)
       const image = await DockerImage.findImageByName(dockerHostArg, originTag);
-      image.tagImage(originTag);
       return image;
     } else {
       plugins.smartlog.defaultLogger.log('error', `Failed at the attempt of creating a new image`);
@@ -68,7 +67,6 @@ export class DockerImage {
   /**
    * the tags for an image
    */
-  public tags: string[];
   public Containers: number;
   public Created: number;
   public Id: string;
