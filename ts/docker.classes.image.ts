@@ -13,6 +13,13 @@ export class DockerImage {
     return images;
   }
 
+  public static async findImageByName (dockerHost: DockerHost, imageNameArg: string) {
+    const images = await this.getImages(dockerHost);
+    return images.find(image => {
+      return image.RepoTags.includes(imageNameArg);
+    });
+  }
+
   public static async createFromRegistry(
     dockerHostArg: DockerHost,
     creationObject: interfaces.IImageCreationDescriptor
@@ -28,7 +35,10 @@ export class DockerImage {
         'info',
         `Successfully pulled image ${creationObject.imageUrl} from the registry`
       );
-      const image = (await DockerImage.getImages(dockerHostArg)).find(image => true);
+      const originTag = `${creationObject.imageUrl}:${creationObject.tag}`;
+      console.log(originTag)
+      const image = await DockerImage.findImageByName(dockerHostArg, originTag);
+      image.tagImage(originTag);
       return image;
     } else {
       plugins.smartlog.defaultLogger.log('error', `Failed at the attempt of creating a new image`);
@@ -83,6 +93,10 @@ export class DockerImage {
   public isUpstreamImage(): boolean {
     // TODO: implement isUpastreamImage
     return this.RepoTags.length > 0;
+  }
+
+  public tagImage(newTag) {
+
   }
 
   /**
