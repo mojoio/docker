@@ -56,4 +56,8 @@ export class DockerService {
     this.dockerHost = dockerHostArg;
     Object.assign(this, serviceObject);
   }
+
+  update() {
+    // TODO: implemnt updating service
+  }
 }

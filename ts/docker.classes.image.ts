@@ -112,14 +112,6 @@ export class DockerImage {
     });
   }
 
-  /**
-   * returns a boolean wether the image has a upstream image
-   */
-  public isUpstreamImage(): boolean {
-    // TODO: implement isUpastreamImage
-    return this.RepoTags.length > 0;
-  }
-
   public tagImage(newTag) {}
 
   /**
