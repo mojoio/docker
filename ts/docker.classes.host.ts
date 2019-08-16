@@ -65,10 +65,10 @@ export class DockerHost {
   /**
    * activates docker swarm
    */
-  public async activateSwarm(addvertisementIpArg: string) {
+  public async activateSwarm(addvertisementIpArg?: string) {
     const response = await this.request('POST', '/swarm/init', {
       ListenAddr: '0.0.0.0:2377',
-      AdvertiseAddr: `${addvertisementIpArg}:2377`,
+      AdvertiseAddr: addvertisementIpArg ? `${addvertisementIpArg}:2377`: undefined,
       DataPathPort: 4789,
       DefaultAddrPool: ['10.10.0.0/8', '20.20.0.0/8'],
       SubnetSize: 24,

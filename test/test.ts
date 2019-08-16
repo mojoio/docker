@@ -52,4 +52,14 @@ tap.test('should return a change Observable', async tools => {
   subscription.unsubscribe();
 });
 
+// SERVICES
+tap.test('should activate swarm mode', async () => {
+  await testDockerHost.activateSwarm();
+});
+
+tap.test('should list all services', async tools => {
+  const services = await docker.DockerService.getServices(testDockerHost);
+  console.log(services);
+});
+
 tap.start();
