@@ -12,8 +12,16 @@ export class DockerHost {
    * the constructor to instantiate a new docker sock instance
    * @param pathArg
    */
-  constructor(pathArg: string = 'http://unix:/var/run/docker.sock:') {
-    this.socketPath = pathArg;
+  constructor(pathArg?: string) {
+    let pathToUse: string;
+    if (pathArg) {
+      pathToUse = pathArg;
+    } else if (process.env.CI) {
+      pathToUse = 'tcp://docker:2375/';
+    } else {
+      pathToUse = 'http://unix:/var/run/docker.sock:';
+    }
+    this.socketPath = pathToUse;
   }
 
   /**
