@@ -6,4 +6,5 @@ export interface IServiceCreationDescriptor {
   Image: string;
   Labels: interfaces.TLabels;
   networks: DockerNetwork[];
+  networkAlias: string;
 }

@@ -73,7 +73,8 @@ tap.test('should create a service', async () => {
       'testlabel': 'hi'
     },
     Name: 'testService',
-    networks: [testNetwork]
+    networks: [testNetwork],
+    networkAlias: 'testService'
   });
 });
 

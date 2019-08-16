@@ -32,7 +32,7 @@ export class DockerService {
     for (const network of serviceCreationDescriptor.networks) {
       networkArray.push({
         Target: network.Name,
-        Aliases: []
+        Aliases: [serviceCreationDescriptor.networkAlias]
       });
     }
 
