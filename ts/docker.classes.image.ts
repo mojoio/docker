@@ -47,6 +47,8 @@ export class DockerImage {
       } else {
         imageUrlObject.imageTag = imageTag;
       }
+    } else if (!imageUrlObject.imageTag) {
+      imageUrlObject.imageTag = 'latest';
     }
     imageUrlObject.imageOriginTag = `${imageUrlObject.imageUrl}:${imageUrlObject.imageTag}`;
 

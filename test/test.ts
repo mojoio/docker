@@ -64,12 +64,16 @@ tap.test('should list all services', async tools => {
 });
 
 tap.test('should create a service', async () => {
+  const testNetwork = await docker.DockerNetwork.createNetwork(testDockerHost, {
+    Name: 'testNetwork'
+  });
   await DockerService.createService(testDockerHost, {
-    Image: 'nginx',
+    Image: 'nginx:latest',
     Labels: {    
       'testlabel': 'hi'
     },
-    Name: 'testService'
+    Name: 'testService',
+    networks: [testNetwork]
   });
 });
 

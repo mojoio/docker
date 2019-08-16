@@ -23,9 +23,18 @@ export class DockerService {
     serviceCreationDescriptor: interfaces.IServiceCreationDescriptor
   ) {
     // lets get the image
-    DockerImage.createFromRegistry(dockerHost, {
+    plugins.smartlog.defaultLogger.log('info', `downloading image for service ${serviceCreationDescriptor.Name}`);
+    const serviceImage = await DockerImage.createFromRegistry(dockerHost, {
       imageUrl: serviceCreationDescriptor.Image
     });
+
+    const networkArray: any[] = [];
+    for (const network of serviceCreationDescriptor.networks) {
+      networkArray.push({
+        Target: network.Name,
+        Aliases: []
+      });
+    }
 
     dockerHost.request('POST', '/services/create', {
       Name: serviceCreationDescriptor.Name,
@@ -35,7 +44,8 @@ export class DockerService {
           Labels: serviceCreationDescriptor.Labels
         }
       },
-      Labels: serviceCreationDescriptor.Labels
+      Labels: serviceCreationDescriptor.Labels,
+      Networks: networkArray
     });
   }
 
