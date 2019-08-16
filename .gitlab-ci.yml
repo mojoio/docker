@@ -48,7 +48,7 @@ testLTS:
   coverage: /\d+.?\d+?\%\s*coverage/
   tags:
   - docker
-  - notpriv
+  - priv
 
 testBuild:
   stage: test
