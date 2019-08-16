@@ -39,6 +39,8 @@ snyk:
 # ====================
 
 testLTS:
+  services:
+    - docker:18-dind
   stage: test
   script:
   - npmci npm prepare
