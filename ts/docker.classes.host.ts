@@ -17,7 +17,7 @@ export class DockerHost {
     if (pathArg) {
       pathToUse = pathArg;
     } else if (process.env.CI) {
-      pathToUse = 'tcp://docker:2375/';
+      pathToUse = 'http://docker:2375/';
     } else {
       pathToUse = 'http://unix:/var/run/docker.sock:';
     }
