@@ -1,5 +1,6 @@
 import { expect, tap } from '@pushrocks/tapbundle';
 import * as docker from '../ts/index';
+import { DockerService } from '../ts/index';
 
 let testDockerHost: docker.DockerHost;
 
@@ -37,7 +38,7 @@ tap.test('should remove a network', async () => {
 tap.test('should pull an image from imagetag', async () => {
   const image = await docker.DockerImage.createFromRegistry(testDockerHost, {
     imageUrl: 'hosttoday/ht-docker-node',
-    tag: 'alpine'
+    imageTag: 'alpine'
   });
   expect(image).to.be.instanceOf(docker.DockerImage);
   console.log(image);
@@ -60,6 +61,16 @@ tap.test('should activate swarm mode', async () => {
 tap.test('should list all services', async tools => {
   const services = await docker.DockerService.getServices(testDockerHost);
   console.log(services);
+});
+
+tap.test('should create a service', async () => {
+  await DockerService.createService(testDockerHost, {
+    Image: 'nginx',
+    Labels: {    
+      'testlabel': 'hi'
+    },
+    Name: 'testService'
+  });
 });
 
 tap.start();

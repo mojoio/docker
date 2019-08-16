@@ -24,20 +24,45 @@ export class DockerImage {
     dockerHostArg: DockerHost,
     creationObject: interfaces.IImageCreationDescriptor
   ): Promise<DockerImage> {
+
+    // lets create a sanatized imageUrlObject
+    const imageUrlObject: {
+      imageUrl: string;
+      imageTag: string;
+      imageOriginTag: string;
+    } = {
+      imageUrl: creationObject.imageUrl,
+      imageTag: creationObject.imageTag,
+      imageOriginTag: null
+    };
+    if (imageUrlObject.imageUrl.includes(':')) {
+      const imageUrl = imageUrlObject.imageUrl.split(':')[0];
+      const imageTag = imageUrlObject.imageUrl.split(':')[1];
+      if (imageUrlObject.imageTag) {
+        throw new Error(
+          `imageUrl ${imageUrlObject.imageUrl} can't be tagged with ${
+            imageUrlObject.imageTag
+          } because it is already tagged with ${imageTag}`
+        );
+      } else {
+        imageUrlObject.imageTag = imageTag;
+      }
+    }
+    imageUrlObject.imageOriginTag = `${imageUrlObject.imageUrl}:${imageUrlObject.imageTag}`;
+
+    // lets actually create the image
     const response = await dockerHostArg.request(
       'POST',
       `/images/create?fromImage=${encodeURIComponent(
-        creationObject.imageUrl
-      )}&tag=${encodeURIComponent(creationObject.tag)}`
+        imageUrlObject.imageUrl
+      )}&tag=${encodeURIComponent(imageUrlObject.imageTag)}`
     );
     if (response.statusCode < 300) {
       plugins.smartlog.defaultLogger.log(
         'info',
-        `Successfully pulled image ${creationObject.imageUrl} from the registry`
+        `Successfully pulled image ${imageUrlObject.imageUrl} from the registry`
       );
-      const originTag = `${creationObject.imageUrl}:${creationObject.tag}`;
-      console.log(originTag);
-      const image = await DockerImage.findImageByName(dockerHostArg, originTag);
+      const image = await DockerImage.findImageByName(dockerHostArg, imageUrlObject.imageOriginTag);
       return image;
     } else {
       plugins.smartlog.defaultLogger.log('error', `Failed at the attempt of creating a new image`);
@@ -99,11 +124,8 @@ export class DockerImage {
    * pulls the latest version from the registry
    */
   public async pullLatestImageFromRegistry(): Promise<boolean> {
-    const dockerImageUrl = this.RepoTags[0].split(':')[0];
-    const dockerImageTag = this.RepoTags[0].split(':')[1];
     const updatedImage = await DockerImage.createFromRegistry(this.dockerHost, {
-      imageUrl: dockerImageUrl,
-      tag: dockerImageTag
+      imageUrl: this.RepoTags[0]
     });
     Object.assign(this, updatedImage);
     // TODO: Compare image digists before and after

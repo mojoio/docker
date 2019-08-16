@@ -2,6 +2,7 @@ import * as plugins from './docker.plugins';
 import * as interfaces from './interfaces';
 
 import { DockerHost } from './docker.classes.host';
+import { DockerImage } from './docker.classes.image';
 
 export class DockerService {
   // STATIC
@@ -21,6 +22,11 @@ export class DockerService {
     dockerHost: DockerHost,
     serviceCreationDescriptor: interfaces.IServiceCreationDescriptor
   ) {
+    // lets get the image
+    DockerImage.createFromRegistry(dockerHost, {
+      imageUrl: serviceCreationDescriptor.Image
+    });
+
     dockerHost.request('POST', '/services/create', {
       Name: serviceCreationDescriptor.Name,
       TaskTemplate: {
