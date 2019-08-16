@@ -49,7 +49,10 @@ export class DockerContainer {
     if (response.statusCode < 300) {
       plugins.smartlog.defaultLogger.log('info', 'Container created successfully');
     } else {
-      plugins.smartlog.defaultLogger.log('error', 'There has been a problem when creating the container');
+      plugins.smartlog.defaultLogger.log(
+        'error',
+        'There has been a problem when creating the container'
+      );
     }
   }
 

@@ -14,11 +14,13 @@ export class DockerService {
     return services;
   }
 
-
   /**
    * creates a service
    */
-  public static async createService(dockerHost: DockerHost, serviceCreationDescriptor: interfaces.IServiceCreationDescriptor) {
+  public static async createService(
+    dockerHost: DockerHost,
+    serviceCreationDescriptor: interfaces.IServiceCreationDescriptor
+  ) {
     dockerHost.request('POST', '/services/create', {
       Name: serviceCreationDescriptor.Name,
       TaskTemplate: {

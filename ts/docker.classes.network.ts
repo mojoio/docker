@@ -41,12 +41,15 @@ export class DockerNetwork {
       Attachable: true,
       Ingress: false
     });
-    if (response.statusCode < 300 ) {
+    if (response.statusCode < 300) {
       plugins.smartlog.defaultLogger.log('info', 'Created network successfully');
       return await DockerNetwork.getNetworkByName(dockerHost, networkCreationDescriptor.Name);
     } else {
-      plugins.smartlog.defaultLogger.log('error', 'There has been an error creating the wanted network');
-      return null
+      plugins.smartlog.defaultLogger.log(
+        'error',
+        'There has been an error creating the wanted network'
+      );
+      return null;
     }
   }
 

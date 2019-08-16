@@ -13,7 +13,7 @@ export class DockerImage {
     return images;
   }
 
-  public static async findImageByName (dockerHost: DockerHost, imageNameArg: string) {
+  public static async findImageByName(dockerHost: DockerHost, imageNameArg: string) {
     const images = await this.getImages(dockerHost);
     return images.find(image => {
       return image.RepoTags.includes(imageNameArg);
@@ -36,7 +36,7 @@ export class DockerImage {
         `Successfully pulled image ${creationObject.imageUrl} from the registry`
       );
       const originTag = `${creationObject.imageUrl}:${creationObject.tag}`;
-      console.log(originTag)
+      console.log(originTag);
       const image = await DockerImage.findImageByName(dockerHostArg, originTag);
       return image;
     } else {
@@ -93,9 +93,7 @@ export class DockerImage {
     return this.RepoTags.length > 0;
   }
 
-  public tagImage(newTag) {
-
-  }
+  public tagImage(newTag) {}
 
   /**
    * pulls the latest version from the registry
@@ -111,6 +109,4 @@ export class DockerImage {
     // TODO: Compare image digists before and after
     return true;
   }
-
-
 }

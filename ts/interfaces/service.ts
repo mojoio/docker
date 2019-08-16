@@ -1,4 +1,4 @@
-import * as interfaces from './'
+import * as interfaces from './';
 
 export interface IServiceCreationDescriptor {
   Name: string;
