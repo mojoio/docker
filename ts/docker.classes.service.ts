@@ -58,6 +58,6 @@ export class DockerService {
   }
 
   update() {
-    // TODO: implemnt updating service
+    
   }
 }

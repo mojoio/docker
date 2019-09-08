@@ -29,9 +29,12 @@ export class DockerHost {
    * @param userArg
    * @param passArg
    */
-  public async auth(registryArg: string, userArg: string, passArg: string) {
-    // TODO: implement Docker Registry authentication
-    await this.request('POST', '');
+  public async auth(registryUrl: string, userArg: string, passArg: string) {
+    const response = await this.request('POST', '/auth', {
+      serveraddress: registryUrl,
+      username: userArg,
+      password: passArg,
+    });
   }
 
   /**
@@ -74,9 +77,21 @@ export class DockerHost {
    * activates docker swarm
    */
   public async activateSwarm(addvertisementIpArg?: string) {
+    // determine advertisement address
+    let addvertisementIp: string;
+    if (addvertisementIpArg) {
+      addvertisementIp = addvertisementIpArg;
+    } else {
+      const smartnetworkInstance = new plugins.smartnetwork.SmartNetwork();
+      const defaultGateway = await smartnetworkInstance.getDefaultGateway();
+      if (defaultGateway) {
+        addvertisementIp = defaultGateway.ipv4.address;
+      }
+    }
+
     const response = await this.request('POST', '/swarm/init', {
       ListenAddr: '0.0.0.0:2377',
-      AdvertiseAddr: addvertisementIpArg ? `${addvertisementIpArg}:2377` : undefined,
+      AdvertiseAddr: addvertisementIp,
       DataPathPort: 4789,
       DefaultAddrPool: ['10.10.0.0/8', '20.20.0.0/8'],
       SubnetSize: 24,

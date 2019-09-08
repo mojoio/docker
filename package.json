@@ -27,19 +27,20 @@
   },
   "homepage": "https://gitlab.com/pushrocks/dockersock#README",
   "dependencies": {
-    "@pushrocks/lik": "^3.0.10",
+    "@pushrocks/lik": "^3.0.11",
     "@pushrocks/smartlog": "^2.0.19",
+    "@pushrocks/smartnetwork": "^1.1.14",
     "@pushrocks/smartpromise": "^3.0.2",
-    "@pushrocks/smartrequest": "^1.1.16",
-    "rxjs": "^6.5.2"
+    "@pushrocks/smartrequest": "^1.1.23",
+    "rxjs": "^6.5.3"
   },
   "devDependencies": {
-    "@gitzone/tsbuild": "^2.1.11",
+    "@gitzone/tsbuild": "^2.1.17",
     "@gitzone/tsrun": "^1.2.8",
     "@gitzone/tstest": "^1.0.24",
-    "@pushrocks/tapbundle": "^3.0.11",
-    "@types/node": "^12.7.1",
-    "tslint": "^5.18.0",
+    "@pushrocks/tapbundle": "^3.0.13",
+    "@types/node": "^12.7.4",
+    "tslint": "^5.19.0",
     "tslint-config-prettier": "^1.18.0"
   },
   "files": [

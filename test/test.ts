@@ -9,6 +9,10 @@ tap.test('should create a new Dockersock instance', async () => {
   return expect(testDockerHost).to.be.instanceof(docker.DockerHost);
 });
 
+tap.test('should create a docker swarm', async () => {
+  
+});
+
 // Containers
 tap.test('should list containers', async () => {
   const containers = await testDockerHost.getContainers();
