@@ -8,7 +8,9 @@ export class DockerNetwork {
     const dockerNetworks: DockerNetwork[] = [];
     const response = await dockerHost.request('GET', '/networks');
     for (const networkObject of response.body) {
-      dockerNetworks.push(new DockerNetwork(dockerHost, networkObject));
+      const dockerNetwork = new DockerNetwork(dockerHost);
+      Object.assign(dockerNetwork, networkObject);
+      dockerNetworks.push(dockerNetwork);
     }
     return dockerNetworks;
   }
@@ -78,11 +80,8 @@ export class DockerNetwork {
     ];
   };
 
-  constructor(dockerHostArg: DockerHost, dockerNetworkObjectArg: any) {
+  constructor(dockerHostArg: DockerHost) {
     this.dockerHost = dockerHostArg;
-    Object.keys(dockerNetworkObjectArg).forEach(keyArg => {
-      this[keyArg] = dockerNetworkObjectArg[keyArg];
-    });
   }
 
   /**

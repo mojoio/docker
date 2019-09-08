@@ -1,6 +1,7 @@
 import * as plugins from './docker.plugins';
 import { DockerContainer } from './docker.classes.container';
 import { DockerNetwork } from './docker.classes.network';
+import { DockerService } from './docker.classes.service';
 
 export class DockerHost {
   /**
@@ -50,6 +51,14 @@ export class DockerHost {
   public async getContainers() {
     const containerArray = await DockerContainer.getContainers(this);
     return containerArray;
+  }
+
+  /**
+   * gets all services
+   */
+  public async getServices() {
+    const serviceArray = await DockerService.getServices(this);
+    return serviceArray;
   }
 
   /**
@@ -115,7 +124,8 @@ export class DockerHost {
         'Content-Type': 'application/json',
         Host: 'docker.sock'
       },
-      requestBody: dataArg
+      requestBody: dataArg,
+      keepAlive: false
     });
     if (response.statusCode !== 200) {
       console.log(response.body);
@@ -130,10 +140,11 @@ export class DockerHost {
       {
         method: methodArg,
         headers: {
-          // 'Content-Type': 'application/json',
+          'Content-Type': 'application/json',
           Host: 'docker.sock'
         },
-        requestBody: null
+        requestBody: null,
+        keepAlive: false
       },
       true
     );

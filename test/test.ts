@@ -5,12 +5,12 @@ import { DockerService } from '../ts/index';
 let testDockerHost: docker.DockerHost;
 
 tap.test('should create a new Dockersock instance', async () => {
-  testDockerHost = new docker.DockerHost();
+  testDockerHost = new docker.DockerHost('http://unix:/var/run/docker.sock:');
   return expect(testDockerHost).to.be.instanceof(docker.DockerHost);
 });
 
 tap.test('should create a docker swarm', async () => {
-  
+  await testDockerHost.activateSwarm();
 });
 
 // Containers
@@ -63,7 +63,7 @@ tap.test('should activate swarm mode', async () => {
 });
 
 tap.test('should list all services', async tools => {
-  const services = await docker.DockerService.getServices(testDockerHost);
+  const services = await testDockerHost.getServices();
   console.log(services);
 });
 
@@ -71,7 +71,7 @@ tap.test('should create a service', async () => {
   const testNetwork = await docker.DockerNetwork.createNetwork(testDockerHost, {
     Name: 'testNetwork'
   });
-  await DockerService.createService(testDockerHost, {
+  const testService = await DockerService.createService(testDockerHost, {
     Image: 'nginx:latest',
     Labels: {    
       'testlabel': 'hi'
@@ -80,6 +80,8 @@ tap.test('should create a service', async () => {
     networks: [testNetwork],
     networkAlias: 'testService'
   });
+  await testService.remove();
+  await testNetwork.remove();
 });
 
 tap.start();
