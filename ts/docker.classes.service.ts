@@ -38,6 +38,9 @@ export class DockerService {
       imageUrl: serviceCreationDescriptor.Image
     });
 
+    const serviceVersion = serviceImage.Labels.version;
+    serviceCreationDescriptor.Labels.version = serviceVersion;
+
     const networkArray: any[] = [];
     for (const network of serviceCreationDescriptor.networks) {
       networkArray.push({
@@ -52,7 +55,8 @@ export class DockerService {
         ContainerSpec: {
           Image: serviceCreationDescriptor.Image,
           Labels: serviceCreationDescriptor.Labels
-        }
+        },
+        ForceUpdate: 1
       },
       Labels: serviceCreationDescriptor.Labels,
       Networks: networkArray
@@ -71,9 +75,15 @@ export class DockerService {
   public UpdatedAt: string;
   public Spec: {
     Name: string;
-    Labels: [any]; // ZBD
-    TaskTemplate: [any],
-    Mode: [any];
+    Labels: interfaces.TLabels; // ZBD
+    TaskTemplate: {
+      ContainerSpec: {
+        Image: string;
+        Isolation: string;
+      }
+      ForceUpdate: 0;
+    },
+    Mode: {};
     Networks: [any[]]
   };
   public Endpoint: { Spec: {}, VirtualIPs: [any[]] };
@@ -84,10 +94,49 @@ export class DockerService {
   }
 
   public async update() {
-    
+    const labels: interfaces.TLabels = {
+      ...this.Spec.Labels,
+
+    };
+    const dockerData = await this.dockerHostRef.request('POST', `/servces/${this.ID}/update?version=${this.Version.Index}`, {
+      Name: this.Spec.Name,
+      TaskTemplate: {
+        ContainerSpec: {
+          Image: this.Spec.TaskTemplate.ContainerSpec.Image,
+          Labels: labels
+        },
+        ForceUpdate: 1
+      },
+      Labels: labels,
+    });
+    Object.assign(this, dockerData);
   }
 
   public async remove() {
     await this.dockerHostRef.request('DELETE', `/services/${this.ID}`);
+  }
+
+  public async reReadFromDockerEngine () {
+    const dockerData = await this.dockerHostRef.request('GET', `/services/${this.ID}`);
+    Object.assign(this, dockerData);
+  }
+
+  public async updateFromRegistry () {
+    // TODO: implement digest based update recognition
+
+    await this.reReadFromDockerEngine();
+    const dockerImage = await DockerImage.createFromRegistry(this.dockerHostRef, {
+      imageUrl: this.Spec.TaskTemplate.ContainerSpec.Image 
+    });
+
+    const imageVersion = new plugins.smartversion.SmartVersion(dockerImage.Labels.version);
+    const serviceVersion = new plugins.smartversion.SmartVersion(this.Spec.Labels.version);
+    if (imageVersion.greaterThan(serviceVersion)) {
+      console.log('service needs to be updated');
+      this.update();
+    }
+
+
+
   }
 }
