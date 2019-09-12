@@ -28,10 +28,12 @@
   "homepage": "https://gitlab.com/pushrocks/dockersock#README",
   "dependencies": {
     "@pushrocks/lik": "^3.0.11",
+    "@pushrocks/smartjson": "^3.0.8",
     "@pushrocks/smartlog": "^2.0.19",
     "@pushrocks/smartnetwork": "^1.1.14",
     "@pushrocks/smartpromise": "^3.0.2",
     "@pushrocks/smartrequest": "^1.1.26",
+    "@pushrocks/smartstring": "^3.0.10",
     "@pushrocks/smartversion": "^2.0.4",
     "rxjs": "^6.5.3"
   },

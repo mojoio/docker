@@ -57,6 +57,22 @@ tap.test('should return a change Observable', async tools => {
   subscription.unsubscribe();
 });
 
+// SECRETS
+tap.test('should create a secret', async () => {
+  const mySecret = await docker.DockerSecret.createSecret(testDockerHost, {
+    name: 'testSecret',
+    contentArg: `{ "hi": "wow"}`,
+    labels: {}
+  });
+  console.log(mySecret);
+});
+
+tap.test('should remove a secret by name', async () => {
+  const mySecret = await docker.DockerSecret.getSecretByName(testDockerHost, 'testSecret');
+  await mySecret.remove();
+});
+
+
 // SERVICES
 tap.test('should activate swarm mode', async () => {
   await testDockerHost.activateSwarm();
@@ -71,6 +87,11 @@ tap.test('should create a service', async () => {
   const testNetwork = await docker.DockerNetwork.createNetwork(testDockerHost, {
     Name: 'testNetwork'
   });
+  const testSecret = await docker.DockerSecret.createSecret(testDockerHost, {
+    name: 'serviceSecret',
+    labels: {},
+    contentArg: '{"hi": "wow"}'
+  });
   const testService = await DockerService.createService(testDockerHost, {
     Image: 'nginx:latest',
     Labels: {    
@@ -78,10 +99,16 @@ tap.test('should create a service', async () => {
     },
     Name: 'testService',
     networks: [testNetwork],
-    networkAlias: 'testService'
+    networkAlias: 'testService',
+    secrets: [testSecret]
   });
+
+  await testSecret.update(`{"updated": "socool"}`);
+  await testService.update();
+
   await testService.remove();
   await testNetwork.remove();
+  await testSecret.remove();
 });
 
 tap.start();

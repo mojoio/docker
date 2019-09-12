@@ -45,6 +45,7 @@ export class DockerImage {
           } because it is already tagged with ${imageTag}`
         );
       } else {
+        imageUrlObject.imageUrl = imageUrl;
         imageUrlObject.imageTag = imageTag;
       }
     } else if (!imageUrlObject.imageTag) {
