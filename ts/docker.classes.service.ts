@@ -142,7 +142,7 @@ export class DockerService {
 
     const dockerData = await this.dockerHostRef.request(
       'POST',
-      `/services/${this.ID}/update?version=${this.Version.Index + 1}`,
+      `/services/${this.ID}/update?version=${this.Version.Index}`,
       {
         Name: this.Spec.Name,
         TaskTemplate: this.Spec.TaskTemplate,
