@@ -89,7 +89,7 @@ export class DockerService {
         },
         ForceUpdate: 1
       },
-      Labels: serviceCreationDescriptor.labels,
+      Labels: labels,
       Networks: networkArray
     });
 
@@ -161,7 +161,7 @@ export class DockerService {
 
   public async reReadFromDockerEngine() {
     const dockerData = await this.dockerHostRef.request('GET', `/services/${this.ID}`);
-    Object.assign(this, dockerData);
+    // TODO: Better assign: Object.assign(this, dockerData);
   }
 
   public async needsUpdate(): Promise<boolean> {
