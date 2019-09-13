@@ -107,7 +107,7 @@ export class DockerService {
   public UpdatedAt: string;
   public Spec: {
     Name: string;
-    Labels: interfaces.TLabels; // ZBD
+    Labels: interfaces.TLabels;
     TaskTemplate: {
       ContainerSpec: {
         Image: string;
@@ -162,7 +162,7 @@ export class DockerService {
     Object.assign(this, dockerData);
   }
 
-  public async updateFromRegistry() {
+  public async needsUpdate(): Promise<boolean> {
     // TODO: implement digest based update recognition
 
     await this.reReadFromDockerEngine();
@@ -173,7 +173,15 @@ export class DockerService {
     const imageVersion = new plugins.smartversion.SmartVersion(dockerImage.Labels.version);
     const serviceVersion = new plugins.smartversion.SmartVersion(this.Spec.Labels.version);
     if (imageVersion.greaterThan(serviceVersion)) {
-      console.log('service needs to be updated');
+      console.log(`service ${this.Spec.Name}  needs to be updated`);
+      return true;
+    } else {
+      console.log(`service ${this.Spec.Name} is up to date.`);
+    }
+  }
+
+  public async updateFromRegistry() {
+    if (await this.needsUpdate()) {
       this.update();
     }
   }
