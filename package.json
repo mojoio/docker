@@ -1,6 +1,6 @@
 {
   "name": "@mojoio/docker",
-  "version": "1.0.68",
+  "version": "1.0.69",
   "description": "easy communication with docker remote api from node, TypeScript ready",
   "private": false,
   "main": "dist/index.js",
