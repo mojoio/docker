@@ -59,6 +59,16 @@ export class DockerService {
     }
 
     const ports = [];
+    for (const port of serviceCreationDescriptor.ports) {
+      const portArray = port.split(':');
+      const hostPort = portArray[0];
+      const containerPort = portArray[1];
+      ports.push({
+        "Protocol": "tcp",
+        "PublishedPort": containerPort,
+        "TargetPort": hostPort
+      });
+    }
 
     const secretArray: any[] = [];
     for (const secret of serviceCreationDescriptor.secrets) {
