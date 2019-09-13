@@ -77,7 +77,7 @@ export class DockerSecret {
 
 
   // get things
-  public getVersion() {
+  public async getVersion() {
     return this.Spec.Labels.version;
   }
 }

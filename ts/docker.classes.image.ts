@@ -132,4 +132,9 @@ export class DockerImage {
     // TODO: Compare image digists before and after
     return true;
   }
+
+  // get stuff
+  public async getVersion() {
+    return this.Labels.version;
+  }
 }
