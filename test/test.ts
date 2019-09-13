@@ -61,6 +61,7 @@ tap.test('should return a change Observable', async tools => {
 tap.test('should create a secret', async () => {
   const mySecret = await docker.DockerSecret.createSecret(testDockerHost, {
     name: 'testSecret',
+    version: '1.0.3',
     contentArg: `{ "hi": "wow"}`,
     labels: {}
   });
@@ -89,15 +90,16 @@ tap.test('should create a service', async () => {
   });
   const testSecret = await docker.DockerSecret.createSecret(testDockerHost, {
     name: 'serviceSecret',
+    version: '0.0.1',
     labels: {},
     contentArg: '{"hi": "wow"}'
   });
   const testService = await DockerService.createService(testDockerHost, {
-    Image: 'nginx:latest',
-    Labels: {    
+    image: 'nginx:latest',
+    labels: {    
       'testlabel': 'hi'
     },
-    Name: 'testService',
+    name: 'testService',
     networks: [testNetwork],
     networkAlias: 'testService',
     secrets: [testSecret]

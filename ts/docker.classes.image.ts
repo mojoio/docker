@@ -15,9 +15,15 @@ export class DockerImage {
 
   public static async findImageByName(dockerHost: DockerHost, imageNameArg: string) {
     const images = await this.getImages(dockerHost);
-    return images.find(image => {
-      return image.RepoTags.includes(imageNameArg);
+    const result = images.find(image => {
+      if (image.RepoTags) {
+        return image.RepoTags.includes(imageNameArg);
+      } else {
+        return false;
+      }
+      
     });
+    return result;
   }
 
   public static async createFromRegistry(

@@ -39,14 +39,18 @@ export class DockerService {
     // lets get the image
     plugins.smartlog.defaultLogger.log(
       'info',
-      `downloading image for service ${serviceCreationDescriptor.Name}`
+      `downloading image for service ${serviceCreationDescriptor.name}`
     );
     const serviceImage = await DockerImage.createFromRegistry(dockerHost, {
-      imageUrl: serviceCreationDescriptor.Image
+      imageUrl: serviceCreationDescriptor.image
     });
 
     const serviceVersion = serviceImage.Labels.version;
-    serviceCreationDescriptor.Labels.version = serviceVersion;
+
+    const labels: interfaces.TLabels = {
+      ...serviceCreationDescriptor.labels,
+      version: serviceVersion
+    };
 
     const networkArray: any[] = [];
     for (const network of serviceCreationDescriptor.networks) {
@@ -71,11 +75,11 @@ export class DockerService {
     }
 
     const response = await dockerHost.request('POST', '/services/create', {
-      Name: serviceCreationDescriptor.Name,
+      Name: serviceCreationDescriptor.name,
       TaskTemplate: {
         ContainerSpec: {
-          Image: serviceCreationDescriptor.Image,
-          Labels: serviceCreationDescriptor.Labels,
+          Image: serviceCreationDescriptor.image,
+          Labels: labels,
           Secrets: secretArray
         },
         UpdateConfig: {
@@ -87,13 +91,13 @@ export class DockerService {
         },
         ForceUpdate: 1
       },
-      Labels: serviceCreationDescriptor.Labels,
+      Labels: serviceCreationDescriptor.labels,
       Networks: networkArray
     });
 
     const createdService = await DockerService.getServiceByName(
       dockerHost,
-      serviceCreationDescriptor.Name
+      serviceCreationDescriptor.name
     );
     return createdService;
   }

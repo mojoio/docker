@@ -28,9 +28,13 @@ export class DockerSecret {
   }
 
   public static async createSecret(dockerHostArg: DockerHost, secretDescriptor: interfaces.ISecretCreationDescriptor) {
+    const labels: interfaces.TLabels = {
+      ...secretDescriptor.labels,
+      version: secretDescriptor.version
+    };
     const response = await dockerHostArg.request('POST', '/secrets/create', {
       Name: secretDescriptor.name,
-      Labels: secretDescriptor.labels,
+      Labels: labels,
       Data: plugins.smartstring.base64.encode(secretDescriptor.contentArg)
     });
     
@@ -46,9 +50,9 @@ export class DockerSecret {
     Name: string;
     Labels: interfaces.TLabels;
   };
-  Version: {
+  public Version: {
     Index:string;
-  }
+  };
 
   public dockerHost: DockerHost;
   constructor(dockerHostArg: DockerHost) {
@@ -69,5 +73,11 @@ export class DockerSecret {
 
   public async remove () {
     await this.dockerHost.request('DELETE', `/secrets/${this.ID}`);
+  }
+
+
+  // get things
+  public getVersion() {
+    return this.Spec.Labels.version;
   }
 }
