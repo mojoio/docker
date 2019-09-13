@@ -47,7 +47,7 @@ export class DockerHost {
 
   /**
    * sets an auth token
-   * @param authToken 
+   * @param authToken
    */
   public setAuthToken(authToken: string) {
     this.registryToken = authToken;
@@ -70,9 +70,8 @@ export class DockerHost {
   }
 
   /**
-   * 
+   *
    */
-
 
   /**
    * gets all containers

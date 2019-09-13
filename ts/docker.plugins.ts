@@ -1,9 +1,7 @@
 // node native path
 import * as path from 'path';
 
-export {
-  path
-};
+export { path };
 
 // @pushrocks scope
 import * as lik from '@pushrocks/lik';
@@ -19,7 +17,18 @@ import * as smartversion from '@pushrocks/smartversion';
 
 smartlog.defaultLogger.enableConsole();
 
-export { lik, smartfile, smartjson, smartlog, smartnetwork, smartpath, smartpromise, smartrequest, smartstring, smartversion };
+export {
+  lik,
+  smartfile,
+  smartjson,
+  smartlog,
+  smartnetwork,
+  smartpath,
+  smartpromise,
+  smartrequest,
+  smartstring,
+  smartversion
+};
 
 // third party
 import * as rxjs from 'rxjs';

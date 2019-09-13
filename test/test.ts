@@ -72,7 +72,6 @@ tap.test('should remove a secret by name', async () => {
   await mySecret.remove();
 });
 
-
 // SERVICES
 tap.test('should activate swarm mode', async () => {
   await testDockerHost.activateSwarm();
@@ -98,8 +97,8 @@ tap.test('should create a service', async () => {
   });
   const testService = await docker.DockerService.createService(testDockerHost, {
     image: testImage,
-    labels: {    
-      'testlabel': 'hi'
+    labels: {
+      testlabel: 'hi'
     },
     name: 'testService',
     networks: [testNetwork],

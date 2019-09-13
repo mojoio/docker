@@ -21,7 +21,6 @@ export class DockerImage {
       } else {
         return false;
       }
-      
     });
     return result;
   }
@@ -30,7 +29,6 @@ export class DockerImage {
     dockerHostArg: DockerHost,
     creationObject: interfaces.IImageCreationDescriptor
   ): Promise<DockerImage> {
-
     // lets create a sanatized imageUrlObject
     const imageUrlObject: {
       imageUrl: string;
@@ -46,9 +44,7 @@ export class DockerImage {
       const imageTag = imageUrlObject.imageUrl.split(':')[1];
       if (imageUrlObject.imageTag) {
         throw new Error(
-          `imageUrl ${imageUrlObject.imageUrl} can't be tagged with ${
-            imageUrlObject.imageTag
-          } because it is already tagged with ${imageTag}`
+          `imageUrl ${imageUrlObject.imageUrl} can't be tagged with ${imageUrlObject.imageTag} because it is already tagged with ${imageTag}`
         );
       } else {
         imageUrlObject.imageUrl = imageUrl;

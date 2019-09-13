@@ -41,7 +41,7 @@ export class DockerService {
       'info',
       `now creating service ${serviceCreationDescriptor.name}`
     );
-    
+
     // await serviceCreationDescriptor.image.pullLatestImageFromRegistry();
     const serviceVersion = await serviceCreationDescriptor.image.getVersion();
 

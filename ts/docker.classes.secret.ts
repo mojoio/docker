@@ -17,17 +17,20 @@ export class DockerSecret {
     return secrets;
   }
 
-  public static async getSecretByID (dockerHostArg: DockerHost, idArg: string) {
+  public static async getSecretByID(dockerHostArg: DockerHost, idArg: string) {
     const secrets = await this.getSecrets(dockerHostArg);
     return secrets.find(secret => secret.ID === idArg);
   }
 
-  public static async getSecretByName (dockerHostArg: DockerHost, nameArg: string) {
+  public static async getSecretByName(dockerHostArg: DockerHost, nameArg: string) {
     const secrets = await this.getSecrets(dockerHostArg);
     return secrets.find(secret => secret.Spec.Name === nameArg);
   }
 
-  public static async createSecret(dockerHostArg: DockerHost, secretDescriptor: interfaces.ISecretCreationDescriptor) {
+  public static async createSecret(
+    dockerHostArg: DockerHost,
+    secretDescriptor: interfaces.ISecretCreationDescriptor
+  ) {
     const labels: interfaces.TLabels = {
       ...secretDescriptor.labels,
       version: secretDescriptor.version
@@ -37,10 +40,13 @@ export class DockerSecret {
       Labels: labels,
       Data: plugins.smartstring.base64.encode(secretDescriptor.contentArg)
     });
-    
+
     const newSecretInstance = new DockerSecret(dockerHostArg);
     Object.assign(newSecretInstance, response.body);
-    Object.assign (newSecretInstance, await DockerSecret.getSecretByID(dockerHostArg, newSecretInstance.ID));
+    Object.assign(
+      newSecretInstance,
+      await DockerSecret.getSecretByID(dockerHostArg, newSecretInstance.ID)
+    );
     return newSecretInstance;
   }
 
@@ -51,7 +57,7 @@ export class DockerSecret {
     Labels: interfaces.TLabels;
   };
   public Version: {
-    Index:string;
+    Index: string;
   };
 
   public dockerHost: DockerHost;
@@ -62,19 +68,22 @@ export class DockerSecret {
   /**
    * updates a secret
    */
-  public async update (contentArg: string) {
+  public async update(contentArg: string) {
     const route = `/secrets/${this.ID}/update?=version=${this.Version.Index}`;
-    const response = await this.dockerHost.request('POST', `/secrets/${this.ID}/update?version=${this.Version.Index}`, {
-      Name: this.Spec.Name,
-      Labels: this.Spec.Labels,
-      Data: plugins.smartstring.base64.encode(contentArg)
-    });
+    const response = await this.dockerHost.request(
+      'POST',
+      `/secrets/${this.ID}/update?version=${this.Version.Index}`,
+      {
+        Name: this.Spec.Name,
+        Labels: this.Spec.Labels,
+        Data: plugins.smartstring.base64.encode(contentArg)
+      }
+    );
   }
 
-  public async remove () {
+  public async remove() {
     await this.dockerHost.request('DELETE', `/secrets/${this.ID}`);
   }
-
 
   // get things
   public async getVersion() {
