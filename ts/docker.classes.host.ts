@@ -8,6 +8,7 @@ export class DockerHost {
    * the path where the docker sock can be found
    */
   public socketPath: string;
+  private registryToken: string = '';
 
   /**
    * the constructor to instantiate a new docker sock instance
@@ -34,8 +35,18 @@ export class DockerHost {
     const response = await this.request('POST', '/auth', {
       serveraddress: registryUrl,
       username: userArg,
-      password: passArg,
+      password: passArg
     });
+    if (response.body.Status !== 'Login Succeeded') {
+      console.log(`Login failed with ${response.body.Status}`);
+      throw new Error(response.body.Status);
+    }
+    console.log(response.body.Status);
+    this.registryToken = plugins.smartstring.base64.encode(response.body.IdentityToken);
+  }
+
+  public setAuthToken(authToken: string) {
+    this.registryToken = authToken;
   }
 
   /**
@@ -122,6 +133,7 @@ export class DockerHost {
       method: methodArg,
       headers: {
         'Content-Type': 'application/json',
+        'X-Registry-Auth': this.registryToken,
         Host: 'docker.sock'
       },
       requestBody: dataArg,
