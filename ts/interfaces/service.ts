@@ -10,4 +10,5 @@ export interface IServiceCreationDescriptor {
   networks: DockerNetwork[];
   networkAlias: string;
   secrets: DockerSecret[];
+  ports: string[];
 }

@@ -103,7 +103,8 @@ tap.test('should create a service', async () => {
     name: 'testService',
     networks: [testNetwork],
     networkAlias: 'testService',
-    secrets: [testSecret]
+    secrets: [testSecret],
+    ports: []
   });
 
   await testSecret.update(`{"updated": "socool"}`);

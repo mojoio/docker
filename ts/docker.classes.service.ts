@@ -58,6 +58,8 @@ export class DockerService {
       });
     }
 
+    const ports = [];
+
     const secretArray: any[] = [];
     for (const secret of serviceCreationDescriptor.secrets) {
       secretArray.push({
@@ -90,7 +92,10 @@ export class DockerService {
         ForceUpdate: 1
       },
       Labels: labels,
-      Networks: networkArray
+      Networks: networkArray,
+      EndpointSpec: {
+        Ports: ports
+      }
     });
 
     const createdService = await DockerService.getServiceByName(
