@@ -45,8 +45,21 @@ export class DockerHost {
     this.registryToken = plugins.smartstring.base64.encode(response.body.IdentityToken);
   }
 
+  /**
+   * sets an auth token
+   * @param authToken 
+   */
   public setAuthToken(authToken: string) {
     this.registryToken = authToken;
+  }
+
+  /**
+   * gets the token from the .docker/config.json file for GitLab registry
+   */
+  public getGitlabComTokenFromDockerConfig() {
+    const dockerConfigPath = plugins.smartpath.get.home('~/.docker/config.json');
+    const configObject = plugins.smartfile.fs.toObjectSync(dockerConfigPath);
+    this.registryToken = configObject.auths['registry.gitlab.com'].auth;
   }
 
   /**
@@ -55,6 +68,11 @@ export class DockerHost {
   public async getNetworks() {
     return await DockerNetwork.getNetworks(this);
   }
+
+  /**
+   * 
+   */
+
 
   /**
    * gets all containers
