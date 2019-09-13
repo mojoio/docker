@@ -3,6 +3,12 @@ import { DockerContainer } from './docker.classes.container';
 import { DockerNetwork } from './docker.classes.network';
 import { DockerService } from './docker.classes.service';
 
+export interface IAuthData {
+  serveraddress: string;
+  username: string;
+  password: string;
+}
+
 export class DockerHost {
   /**
    * the path where the docker sock can be found
@@ -31,26 +37,16 @@ export class DockerHost {
    * @param userArg
    * @param passArg
    */
-  public async auth(registryUrl: string, userArg: string, passArg: string) {
-    const response = await this.request('POST', '/auth', {
-      serveraddress: registryUrl,
-      username: userArg,
-      password: passArg
-    });
+  public async auth(authData: IAuthData) {
+    const response = await this.request('POST', '/auth', authData);
     if (response.body.Status !== 'Login Succeeded') {
       console.log(`Login failed with ${response.body.Status}`);
       throw new Error(response.body.Status);
     }
     console.log(response.body.Status);
-    this.registryToken = plugins.smartstring.base64.encode(response.body.IdentityToken);
-  }
-
-  /**
-   * sets an auth token
-   * @param authToken
-   */
-  public setAuthToken(authToken: string) {
-    this.registryToken = authToken;
+    this.registryToken = plugins.smartstring.base64.encode(
+      plugins.smartjson.Smartjson.stringify(authData, {})
+    );
   }
 
   /**
@@ -59,7 +55,14 @@ export class DockerHost {
   public async getGitlabComTokenFromDockerConfig() {
     const dockerConfigPath = plugins.smartpath.get.home('~/.docker/config.json');
     const configObject = plugins.smartfile.fs.toObjectSync(dockerConfigPath);
-    this.registryToken = configObject.auths['registry.gitlab.com'].auth;
+    const gitlabAuthBase64 = configObject.auths['registry.gitlab.com'].auth;
+    const gitlabAuth: string = plugins.smartstring.base64.decode(gitlabAuthBase64);
+    const gitlabAuthArray = gitlabAuth.split(':');
+    await this.auth({
+      username: gitlabAuthArray[0],
+      password: gitlabAuthArray[1],
+      serveraddress: 'registry.gitlab.com'
+    })
   }
 
   /**
@@ -170,6 +173,7 @@ export class DockerHost {
         method: methodArg,
         headers: {
           'Content-Type': 'application/json',
+          'X-Registry-Auth': this.registryToken,
           Host: 'docker.sock'
         },
         requestBody: null,
