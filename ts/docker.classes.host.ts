@@ -56,7 +56,7 @@ export class DockerHost {
   /**
    * gets the token from the .docker/config.json file for GitLab registry
    */
-  public getGitlabComTokenFromDockerConfig() {
+  public async getGitlabComTokenFromDockerConfig() {
     const dockerConfigPath = plugins.smartpath.get.home('~/.docker/config.json');
     const configObject = plugins.smartfile.fs.toObjectSync(dockerConfigPath);
     this.registryToken = configObject.auths['registry.gitlab.com'].auth;
