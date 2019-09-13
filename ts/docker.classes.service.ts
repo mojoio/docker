@@ -39,13 +39,11 @@ export class DockerService {
     // lets get the image
     plugins.smartlog.defaultLogger.log(
       'info',
-      `downloading image for service ${serviceCreationDescriptor.name}`
+      `now creating service ${serviceCreationDescriptor.name}`
     );
-    const serviceImage = await DockerImage.createFromRegistry(dockerHost, {
-      imageUrl: serviceCreationDescriptor.image
-    });
-
-    const serviceVersion = serviceImage.Labels.version;
+    
+    // await serviceCreationDescriptor.image.pullLatestImageFromRegistry();
+    const serviceVersion = await serviceCreationDescriptor.image.getVersion();
 
     const labels: interfaces.TLabels = {
       ...serviceCreationDescriptor.labels,
@@ -78,7 +76,7 @@ export class DockerService {
       Name: serviceCreationDescriptor.name,
       TaskTemplate: {
         ContainerSpec: {
-          Image: serviceCreationDescriptor.image,
+          Image: serviceCreationDescriptor.image.RepoTags[0],
           Labels: labels,
           Secrets: secretArray
         },

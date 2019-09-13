@@ -119,7 +119,13 @@ export class DockerImage {
     });
   }
 
-  public tagImage(newTag) {}
+  /**
+   * tag an image
+   * @param newTag
+   */
+  public async tagImage(newTag) {
+    throw new Error('.tagImage is not yet implemented');
+  }
 
   /**
    * pulls the latest version from the registry

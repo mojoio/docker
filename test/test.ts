@@ -1,6 +1,5 @@
 import { expect, tap } from '@pushrocks/tapbundle';
 import * as docker from '../ts/index';
-import { DockerService } from '../ts/index';
 
 let testDockerHost: docker.DockerHost;
 
@@ -94,8 +93,11 @@ tap.test('should create a service', async () => {
     labels: {},
     contentArg: '{"hi": "wow"}'
   });
-  const testService = await DockerService.createService(testDockerHost, {
-    image: 'nginx:latest',
+  const testImage = await docker.DockerImage.createFromRegistry(testDockerHost, {
+    imageUrl: 'nginx:latest'
+  });
+  const testService = await docker.DockerService.createService(testDockerHost, {
+    image: testImage,
     labels: {    
       'testlabel': 'hi'
     },
