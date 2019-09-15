@@ -11,4 +11,5 @@ export interface IServiceCreationDescriptor {
   networkAlias: string;
   secrets: DockerSecret[];
   ports: string[];
+  accessHostDockerSock?: boolean;
 }

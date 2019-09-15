@@ -107,9 +107,6 @@ tap.test('should create a service', async () => {
     ports: []
   });
 
-  await testSecret.update(`{"updated": "socool"}`);
-  await testService.update();
-
   await testService.remove();
   await testNetwork.remove();
   await testSecret.remove();

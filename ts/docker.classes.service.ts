@@ -50,7 +50,34 @@ export class DockerService {
       version: serviceVersion
     };
 
-    const networkArray: any[] = [];
+    const mounts: Array<{
+      /**
+       * the target inside the container
+       */
+      Target: string;
+      /**
+       * The Source from which to mount the data (Volume or host path)
+       */
+      Source: string;
+      Type: 'bind' | 'volume' | 'tmpfs' | 'npipe';
+      ReadOnly: boolean;
+      Consistency: 'default' | 'consistent' | 'cached' | 'delegated';
+    }> = [];
+    if (serviceCreationDescriptor.accessHostDockerSock) {
+      mounts.push({
+        Target: '/var/run/docker.sock',
+        Source: '/var/run/docker.sock',
+        Consistency: 'default',
+        ReadOnly: false,
+        Type: 'bind'
+      });
+    }
+
+    const networkArray: Array<{
+      Target: string;
+      Aliases: string[];
+    }> = [];
+
     for (const network of serviceCreationDescriptor.networks) {
       networkArray.push({
         Target: network.Name,
@@ -64,9 +91,9 @@ export class DockerService {
       const hostPort = portArray[0];
       const containerPort = portArray[1];
       ports.push({
-        "Protocol": "tcp",
-        "PublishedPort": parseInt(containerPort, 10),
-        "TargetPort": parseInt(hostPort, 10)
+        Protocol: 'tcp',
+        PublishedPort: parseInt(containerPort, 10),
+        TargetPort: parseInt(hostPort, 10)
       });
     }
 
@@ -90,7 +117,8 @@ export class DockerService {
         ContainerSpec: {
           Image: serviceCreationDescriptor.image.RepoTags[0],
           Labels: labels,
-          Secrets: secretArray
+          Secrets: secretArray,
+          Mounts: mounts
         },
         UpdateConfig: {
           Parallelism: 0,
@@ -151,25 +179,6 @@ export class DockerService {
     this.dockerHostRef = dockerHostArg;
   }
 
-  public async update() {
-    const labels: interfaces.TLabels = {
-      ...this.Spec.Labels,
-      version: 'x.x.x'
-    };
-
-    const dockerData = await this.dockerHostRef.request(
-      'POST',
-      `/services/${this.ID}/update?version=${this.Version.Index}`,
-      {
-        Name: this.Spec.Name,
-        TaskTemplate: this.Spec.TaskTemplate,
-        Labels: labels,
-        Networks: this.Spec.Networks
-      }
-    );
-    Object.assign(this, dockerData);
-  }
-
   public async remove() {
     await this.dockerHostRef.request('DELETE', `/services/${this.ID}`);
   }
@@ -194,12 +203,6 @@ export class DockerService {
       return true;
     } else {
       console.log(`service ${this.Spec.Name} is up to date.`);
-    }
-  }
-
-  public async updateFromRegistry() {
-    if (await this.needsUpdate()) {
-      this.update();
     }
   }
 }
