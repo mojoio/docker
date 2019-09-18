@@ -62,7 +62,7 @@ export class DockerHost {
       username: gitlabAuthArray[0],
       password: gitlabAuthArray[1],
       serveraddress: 'registry.gitlab.com'
-    })
+    });
   }
 
   /**
