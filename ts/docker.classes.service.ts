@@ -97,11 +97,12 @@ export class DockerService {
       });
     }
 
+    // lets configure secrets
     const secretArray: any[] = [];
     for (const secret of serviceCreationDescriptor.secrets) {
       secretArray.push({
         File: {
-          Name: 'secret.json',
+          Name: 'secret.json', // TODO: make sure that works with multiple secrets
           UID: '33',
           GID: '33',
           Mode: 384
@@ -109,6 +110,15 @@ export class DockerService {
         SecretID: secret.ID,
         SecretName: secret.Spec.Name
       });
+    }
+
+    // lets configure limits
+    const limits = {
+      MemoryBytes: 1000 * 1000000
+    };
+
+    if (serviceCreationDescriptor.resources) {
+      limits.MemoryBytes = serviceCreationDescriptor.resources.memorySizeMB * 1000000;
     }
 
     const response = await dockerHost.request('POST', '/services/create', {
@@ -127,7 +137,10 @@ export class DockerService {
           Monitor: 15000000000,
           MaxFailureRatio: 0.15
         },
-        ForceUpdate: 1
+        ForceUpdate: 1,
+        Resources: {
+          Limits: limits
+        }
       },
       Labels: labels,
       Networks: networkArray,
