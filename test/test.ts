@@ -87,24 +87,22 @@ tap.test('should create a service', async () => {
     Name: 'testNetwork'
   });
   const testSecret = await docker.DockerSecret.createSecret(testDockerHost, {
-    name: 'serviceSecret',
+    name: 'testSecret',
     version: '0.0.1',
     labels: {},
     contentArg: '{"hi": "wow"}'
   });
   const testImage = await docker.DockerImage.createFromRegistry(testDockerHost, {
-    imageUrl: 'nginx:latest'
+    imageUrl: 'registry.gitlab.com/hosttoday/ht-docker-static'
   });
   const testService = await docker.DockerService.createService(testDockerHost, {
     image: testImage,
-    labels: {
-      testlabel: 'hi'
-    },
+    labels: {},
     name: 'testService',
     networks: [testNetwork],
     networkAlias: 'testService',
     secrets: [testSecret],
-    ports: []
+    ports: ['3000:80']
   });
 
   await testService.remove();

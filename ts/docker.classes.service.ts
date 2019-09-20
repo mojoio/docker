@@ -92,8 +92,8 @@ export class DockerService {
       const containerPort = portArray[1];
       ports.push({
         Protocol: 'tcp',
-        PublishedPort: parseInt(containerPort, 10),
-        TargetPort: parseInt(hostPort, 10)
+        PublishedPort: parseInt(hostPort, 10),
+        TargetPort: parseInt(containerPort, 10)
       });
     }
 

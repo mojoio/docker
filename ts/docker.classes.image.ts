@@ -137,6 +137,10 @@ export class DockerImage {
 
   // get stuff
   public async getVersion() {
-    return this.Labels.version;
+    if (this.Labels && this.Labels.version) {
+      return this.Labels.version;
+    } else {
+      return 'x.x.x';
+    }
   }
 }
