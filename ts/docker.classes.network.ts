@@ -90,4 +90,17 @@ export class DockerNetwork {
   public async remove() {
     const response = await this.dockerHost.request('DELETE', `/networks/${this.Id}`);
   }
+
+  public async getContainersOnNetwork(): Promise<{
+    [key: string]: {
+      Name: string;
+      EndpointID: string;
+      MacAddress: string;
+      IPv4Address: string;
+      IPv6Address: string;
+    };
+  }> {
+    const response = await this.dockerHost.request('GET', `/networks/${this.Id}`);
+    return response.body.Containers;
+  }
 }
