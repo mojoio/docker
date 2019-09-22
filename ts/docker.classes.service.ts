@@ -128,7 +128,10 @@ export class DockerService {
           Image: serviceCreationDescriptor.image.RepoTags[0],
           Labels: labels,
           Secrets: secretArray,
-          Mounts: mounts
+          Mounts: mounts,
+          DNSConfig: {
+            Nameservers: ['1.1.1.1']
+          }
         },
         UpdateConfig: {
           Parallelism: 0,
