@@ -2,6 +2,7 @@ import * as plugins from './docker.plugins';
 import * as interfaces from './interfaces';
 
 import { DockerHost } from './docker.classes.host';
+import { DockerService } from './docker.classes.service';
 
 export class DockerNetwork {
   public static async getNetworks(dockerHost: DockerHost): Promise<DockerNetwork[]> {
@@ -91,16 +92,27 @@ export class DockerNetwork {
     const response = await this.dockerHost.request('DELETE', `/networks/${this.Id}`);
   }
 
-  public async getContainersOnNetwork(): Promise<{
-    [key: string]: {
+  public async getContainersOnNetwork(): Promise<Array<{
       Name: string;
       EndpointID: string;
       MacAddress: string;
       IPv4Address: string;
       IPv6Address: string;
-    };
-  }> {
+    }>> {
+    const returnArray = [];
     const response = await this.dockerHost.request('GET', `/networks/${this.Id}`);
-    return response.body.Containers;
+    for (const key of Object.keys(response.body.Containers)) {
+      returnArray.push(response.body.Containers[key]);
+    }
+
+    return returnArray;
+
+  }
+
+  public async getIpForService(serviceArg: DockerService) {
+    const containersOnNetwork = await this.getContainersOnNetwork();
+    const containersOfService = containersOnNetwork.filter(container => {
+      return container.Name.startsWith(serviceArg.Spec.Name);
+    });
   }
 }
