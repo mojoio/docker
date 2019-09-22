@@ -3,4 +3,5 @@
  */
 export interface INetworkCreationDescriptor {
   Name: string;
+  NetworkNumber: number;
 }

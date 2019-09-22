@@ -29,7 +29,17 @@ export class DockerNetwork {
       Name: networkCreationDescriptor.Name,
       CheckDuplicate: true,
       Driver: 'overlay',
-      EnableIPv6: false,
+      EnableIPv6: true,
+      IPAM: {
+        Driver: 'default',
+        Config: [
+          {
+            Subnet: `172.20.${networkCreationDescriptor.NetworkNumber}.0/16`,
+            IPRange: `172.20.${networkCreationDescriptor.NetworkNumber}.0/24`,
+            Gateway: `172.20.${networkCreationDescriptor.NetworkNumber}.11`
+          }
+        ]
+      },
       Internal: true,
       Attachable: true,
       Ingress: false
