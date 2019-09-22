@@ -114,6 +114,6 @@ export class DockerNetwork {
     const containersOfService = containersOnNetwork.filter(container => {
       return container.Name.startsWith(serviceArg.Spec.Name);
     });
-    return containersOnNetwork;
+    return containersOfService;
   }
 }
