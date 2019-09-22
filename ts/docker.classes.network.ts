@@ -109,10 +109,11 @@ export class DockerNetwork {
 
   }
 
-  public async getIpForService(serviceArg: DockerService) {
+  public async getContainersOnNetworkForService(serviceArg: DockerService) {
     const containersOnNetwork = await this.getContainersOnNetwork();
     const containersOfService = containersOnNetwork.filter(container => {
       return container.Name.startsWith(serviceArg.Spec.Name);
     });
+    return containersOnNetwork;
   }
 }
