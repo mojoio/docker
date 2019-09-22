@@ -30,16 +30,6 @@ export class DockerNetwork {
       CheckDuplicate: true,
       Driver: 'overlay',
       EnableIPv6: false,
-      IPAM: {
-        Driver: 'default',
-        Config: [
-          {
-            Subnet: '172.20.10.0/16',
-            IPRange: '172.20.10.0/24',
-            Gateway: '172.20.10.11'
-          }
-        ]
-      },
       Internal: true,
       Attachable: true,
       Ingress: false
