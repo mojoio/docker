@@ -30,7 +30,7 @@ export class DockerNetwork {
       CheckDuplicate: true,
       Driver: 'overlay',
       EnableIPv6: true,
-      IPAM: {
+      /* IPAM: {
         Driver: 'default',
         Config: [
           {
@@ -39,8 +39,8 @@ export class DockerNetwork {
             Gateway: `172.20.${networkCreationDescriptor.NetworkNumber}.11`
           }
         ]
-      },
-      Internal: true,
+      }, */
+      Internal: false,
       Attachable: true,
       Ingress: false
     });

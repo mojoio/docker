@@ -129,9 +129,9 @@ export class DockerService {
           Labels: labels,
           Secrets: secretArray,
           Mounts: mounts,
-          DNSConfig: {
+          /* DNSConfig: {
             Nameservers: ['1.1.1.1']
-          }
+          } */
         },
         UpdateConfig: {
           Parallelism: 0,

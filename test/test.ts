@@ -26,8 +26,7 @@ tap.test('should list networks', async () => {
 
 tap.test('should create a network', async () => {
   const newNetwork = await docker.DockerNetwork.createNetwork(testDockerHost, {
-    Name: 'webgateway',
-    NetworkNumber: 10
+    Name: 'webgateway'
   });
   expect(newNetwork).to.be.instanceOf(docker.DockerNetwork);
   expect(newNetwork.Name).to.equal('webgateway');
@@ -85,8 +84,7 @@ tap.test('should list all services', async tools => {
 
 tap.test('should create a service', async () => {
   const testNetwork = await docker.DockerNetwork.createNetwork(testDockerHost, {
-    Name: 'testNetwork',
-    NetworkNumber: 11
+    Name: 'testNetwork'
   });
   const testSecret = await docker.DockerSecret.createSecret(testDockerHost, {
     name: 'testSecret',
