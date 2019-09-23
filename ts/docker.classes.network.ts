@@ -29,7 +29,7 @@ export class DockerNetwork {
       Name: networkCreationDescriptor.Name,
       CheckDuplicate: true,
       Driver: 'overlay',
-      EnableIPv6: true,
+      EnableIPv6: false,
       /* IPAM: {
         Driver: 'default',
         Config: [
