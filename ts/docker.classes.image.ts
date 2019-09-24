@@ -140,7 +140,7 @@ export class DockerImage {
     if (this.Labels && this.Labels.version) {
       return this.Labels.version;
     } else {
-      return 'x.x.x';
+      return '0.0.0';
     }
   }
 }
