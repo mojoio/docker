@@ -128,7 +128,7 @@ export class DockerService {
           Image: serviceCreationDescriptor.image.RepoTags[0],
           Labels: labels,
           Secrets: secretArray,
-          Mounts: mounts,
+          Mounts: mounts
           /* DNSConfig: {
             Nameservers: ['1.1.1.1']
           } */
@@ -143,6 +143,13 @@ export class DockerService {
         ForceUpdate: 1,
         Resources: {
           Limits: limits
+        },
+        LogDriver: {
+          Name: 'json-file',
+          Options: {
+            'max-file': '3',
+            'max-size': '10M'
+          }
         }
       },
       Labels: labels,
