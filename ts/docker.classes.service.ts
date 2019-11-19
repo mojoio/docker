@@ -113,8 +113,14 @@ export class DockerService {
     }
 
     // lets configure limits
+
+    const memoryLimitMB =
+      serviceCreationDescriptor.resources && serviceCreationDescriptor.resources.memorySizeMB
+        ? serviceCreationDescriptor.resources.memorySizeMB
+        : 1000;
+
     const limits = {
-      MemoryBytes: 1000 * 1000000
+      MemoryBytes: memoryLimitMB * 1000000
     };
 
     if (serviceCreationDescriptor.resources) {
