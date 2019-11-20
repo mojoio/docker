@@ -31,7 +31,7 @@
     "@pushrocks/smartfile": "^7.0.6",
     "@pushrocks/smartjson": "^3.0.8",
     "@pushrocks/smartlog": "^2.0.21",
-    "@pushrocks/smartnetwork": "^1.1.14",
+    "@pushrocks/smartnetwork": "^1.1.16",
     "@pushrocks/smartpath": "^4.0.1",
     "@pushrocks/smartpromise": "^3.0.6",
     "@pushrocks/smartrequest": "^1.1.42",
@@ -44,7 +44,7 @@
     "@gitzone/tsrun": "^1.2.8",
     "@gitzone/tstest": "^1.0.28",
     "@pushrocks/tapbundle": "^3.2.0",
-    "@types/node": "^12.12.9",
+    "@types/node": "^12.12.11",
     "tslint": "^5.20.1",
     "tslint-config-prettier": "^1.18.0"
   },
