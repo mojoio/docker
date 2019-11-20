@@ -13,6 +13,6 @@ export interface IServiceCreationDescriptor {
   ports: string[];
   accessHostDockerSock?: boolean;
   resources?: {
-    memorySizeMB: number
+    memorySizeMB: number;
   };
 }

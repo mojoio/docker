@@ -92,13 +92,15 @@ export class DockerNetwork {
     const response = await this.dockerHost.request('DELETE', `/networks/${this.Id}`);
   }
 
-  public async getContainersOnNetwork(): Promise<Array<{
+  public async getContainersOnNetwork(): Promise<
+    Array<{
       Name: string;
       EndpointID: string;
       MacAddress: string;
       IPv4Address: string;
       IPv6Address: string;
-    }>> {
+    }>
+  > {
     const returnArray = [];
     const response = await this.dockerHost.request('GET', `/networks/${this.Id}`);
     for (const key of Object.keys(response.body.Containers)) {
@@ -106,7 +108,6 @@ export class DockerNetwork {
     }
 
     return returnArray;
-
   }
 
   public async getContainersOnNetworkForService(serviceArg: DockerService) {
