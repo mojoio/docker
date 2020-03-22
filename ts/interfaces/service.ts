@@ -1,3 +1,5 @@
+import * as plugins from '../docker.plugins';
+
 import * as interfaces from './';
 import { DockerNetwork } from '../docker.classes.network';
 import { DockerSecret } from '../docker.classes.secret';
@@ -13,6 +15,7 @@ export interface IServiceCreationDescriptor {
   ports: string[];
   accessHostDockerSock?: boolean;
   resources?: {
-    memorySizeMB: number;
+    memorySizeMB?: number;
+    volumeMounts: plugins.tsclass.container.IVolumeMount[]
   };
 }

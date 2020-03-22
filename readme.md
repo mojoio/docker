@@ -8,7 +8,7 @@ unofficial docker engine api abstraction package written in TypeScript
 * [docs (typedoc)](https://mojoio.gitlab.io/docker/)
 
 ## Status for master
-[![build status](https://gitlab.com/mojoio/docker/badges/master/build.svg)](https://gitlab.com/mojoio/docker/commits/master)
+[![pipeline status](https://gitlab.com/mojoio/docker/badges/master/pipeline.svg)](https://gitlab.com/mojoio/docker/commits/master)
 [![coverage report](https://gitlab.com/mojoio/docker/badges/master/coverage.svg)](https://gitlab.com/mojoio/docker/commits/master)
 [![npm downloads per month](https://img.shields.io/npm/dm/@mojoio/docker.svg)](https://www.npmjs.com/package/@mojoio/docker)
 [![Known Vulnerabilities](https://snyk.io/test/npm/@mojoio/docker/badge.svg)](https://snyk.io/test/npm/@mojoio/docker)
@@ -29,7 +29,6 @@ const run = async () => {
   const containers = await myDockerHost.getContainers(); // promise, resolve with an array of DockerContainers
 };
 ```
-
 
 ## Contribution
 

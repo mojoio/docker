@@ -73,6 +73,18 @@ export class DockerService {
       });
     }
 
+    if (serviceCreationDescriptor.resources && serviceCreationDescriptor.resources.volumeMounts) {
+      for(const volumeMount of serviceCreationDescriptor.resources.volumeMounts) {
+        mounts.push({
+          Target: volumeMount.containerFsPath,
+          Source: volumeMount.hostFsPath,
+          Consistency: 'default',
+          ReadOnly: false,
+          Type: 'bind'
+        });
+      }
+    }
+
     const networkArray: Array<{
       Target: string;
       Aliases: string[];

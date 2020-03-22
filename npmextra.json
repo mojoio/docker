@@ -10,6 +10,7 @@
     "npmRegistryUrl": "registry.npmjs.org"
   },
   "gitzone": {
+    "projectType": "npm",
     "module": {
       "githost": "gitlab.com",
       "gitscope": "mojoio",
