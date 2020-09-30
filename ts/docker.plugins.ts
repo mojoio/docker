@@ -15,8 +15,6 @@ import * as smartrequest from '@pushrocks/smartrequest';
 import * as smartstring from '@pushrocks/smartstring';
 import * as smartversion from '@pushrocks/smartversion';
 
-smartlog.defaultLogger.enableConsole();
-
 export {
   lik,
   smartfile,

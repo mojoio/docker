@@ -2,6 +2,7 @@ import * as plugins from './docker.plugins';
 import * as interfaces from './interfaces';
 
 import { DockerHost } from './docker.classes.host';
+import { logger } from './docker.logging';
 
 export class DockerContainer {
   // STATIC
@@ -47,9 +48,9 @@ export class DockerContainer {
       User: 'root'
     });
     if (response.statusCode < 300) {
-      plugins.smartlog.defaultLogger.log('info', 'Container created successfully');
+      logger.log('info', 'Container created successfully');
     } else {
-      plugins.smartlog.defaultLogger.log(
+      logger.log(
         'error',
         'There has been a problem when creating the container'
       );

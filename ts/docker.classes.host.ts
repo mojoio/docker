@@ -2,6 +2,7 @@ import * as plugins from './docker.plugins';
 import { DockerContainer } from './docker.classes.container';
 import { DockerNetwork } from './docker.classes.network';
 import { DockerService } from './docker.classes.service';
+import { logger } from './docker.logging';
 
 export interface IAuthData {
   serveraddress: string;
@@ -138,9 +139,9 @@ export class DockerHost {
       ForceNewCluster: false
     });
     if (response.statusCode === 200) {
-      plugins.smartlog.defaultLogger.log('info', 'created Swam succesfully');
+      logger.log('info', 'created Swam succesfully');
     } else {
-      plugins.smartlog.defaultLogger.log('error', 'could not initiate swarm');
+      logger.log('error', 'could not initiate swarm');
     }
   }
 

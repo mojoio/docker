@@ -4,6 +4,7 @@ import * as interfaces from './interfaces';
 import { DockerHost } from './docker.classes.host';
 import { DockerImage } from './docker.classes.image';
 import { DockerSecret } from './docker.classes.secret';
+import { logger } from './docker.logging';
 
 export class DockerService {
   // STATIC
@@ -37,7 +38,7 @@ export class DockerService {
     serviceCreationDescriptor: interfaces.IServiceCreationDescriptor
   ): Promise<DockerService> {
     // lets get the image
-    plugins.smartlog.defaultLogger.log(
+    logger.log(
       'info',
       `now creating service ${serviceCreationDescriptor.name}`
     );

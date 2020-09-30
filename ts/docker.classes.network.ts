@@ -3,6 +3,7 @@ import * as interfaces from './interfaces';
 
 import { DockerHost } from './docker.classes.host';
 import { DockerService } from './docker.classes.service';
+import { logger } from './docker.logging';
 
 export class DockerNetwork {
   public static async getNetworks(dockerHost: DockerHost): Promise<DockerNetwork[]> {
@@ -45,10 +46,10 @@ export class DockerNetwork {
       Ingress: false
     });
     if (response.statusCode < 300) {
-      plugins.smartlog.defaultLogger.log('info', 'Created network successfully');
+      logger.log('info', 'Created network successfully');
       return await DockerNetwork.getNetworkByName(dockerHost, networkCreationDescriptor.Name);
     } else {
-      plugins.smartlog.defaultLogger.log(
+      logger.log(
         'error',
         'There has been an error creating the wanted network'
       );

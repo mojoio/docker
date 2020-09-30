@@ -1,6 +1,7 @@
 import * as plugins from './docker.plugins';
 import * as interfaces from './interfaces';
 import { DockerHost } from './docker.classes.host';
+import { logger } from './docker.logging';
 
 export class DockerImage {
   // STATIC
@@ -63,14 +64,14 @@ export class DockerImage {
       )}&tag=${encodeURIComponent(imageUrlObject.imageTag)}`
     );
     if (response.statusCode < 300) {
-      plugins.smartlog.defaultLogger.log(
+      logger.log(
         'info',
         `Successfully pulled image ${imageUrlObject.imageUrl} from the registry`
       );
       const image = await DockerImage.findImageByName(dockerHostArg, imageUrlObject.imageOriginTag);
       return image;
     } else {
-      plugins.smartlog.defaultLogger.log('error', `Failed at the attempt of creating a new image`);
+      logger.log('error', `Failed at the attempt of creating a new image`);
     }
   }
 
