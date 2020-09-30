@@ -6,8 +6,8 @@
   "main": "dist_ts/index.js",
   "typings": "dist_ts/index.d.ts",
   "scripts": {
-    "test": "tstest test/",
-    "build": "tsbuild"
+    "test": "(tstest test/ --web)",
+    "build": "(tsbuild --web)"
   },
   "repository": {
     "type": "git",
@@ -60,5 +60,8 @@
     "cli.js",
     "npmextra.json",
     "readme.md"
+  ],
+  "browserslist": [
+    "last 1 chrome versions"
   ]
 }

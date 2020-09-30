@@ -38,22 +38,19 @@ export class DockerContainer {
   ) {
     // check for unique hostname
     const existingContainers = await DockerContainer.getContainers(dockerHost);
-    const sameHostNameContainer = existingContainers.find(container => {
+    const sameHostNameContainer = existingContainers.find((container) => {
       // TODO implement HostName Detection;
       return false;
     });
     const response = await dockerHost.request('POST', '/containers/create', {
       Hostname: containerCreationDescriptor.Hostname,
       Domainname: containerCreationDescriptor.Domainname,
-      User: 'root'
+      User: 'root',
     });
     if (response.statusCode < 300) {
       logger.log('info', 'Container created successfully');
     } else {
-      logger.log(
-        'error',
-        'There has been a problem when creating the container'
-      );
+      logger.log('error', 'There has been a problem when creating the container');
     }
   }
 
@@ -95,7 +92,7 @@ export class DockerContainer {
   public Mounts: any;
   constructor(dockerHostArg: DockerHost, dockerContainerObjectArg: any) {
     this.dockerHost = dockerHostArg;
-    Object.keys(dockerContainerObjectArg).forEach(keyArg => {
+    Object.keys(dockerContainerObjectArg).forEach((keyArg) => {
       this[keyArg] = dockerContainerObjectArg[keyArg];
     });
   }

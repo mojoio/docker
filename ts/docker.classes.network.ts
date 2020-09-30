@@ -19,7 +19,7 @@ export class DockerNetwork {
 
   public static async getNetworkByName(dockerHost: DockerHost, dockerNetworkNameArg: string) {
     const networks = await DockerNetwork.getNetworks(dockerHost);
-    return networks.find(dockerNetwork => dockerNetwork.Name === dockerNetworkNameArg);
+    return networks.find((dockerNetwork) => dockerNetwork.Name === dockerNetworkNameArg);
   }
 
   public static async createNetwork(
@@ -43,16 +43,13 @@ export class DockerNetwork {
       }, */
       Internal: false,
       Attachable: true,
-      Ingress: false
+      Ingress: false,
     });
     if (response.statusCode < 300) {
       logger.log('info', 'Created network successfully');
       return await DockerNetwork.getNetworkByName(dockerHost, networkCreationDescriptor.Name);
     } else {
-      logger.log(
-        'error',
-        'There has been an error creating the wanted network'
-      );
+      logger.log('error', 'There has been an error creating the wanted network');
       return null;
     }
   }
@@ -113,7 +110,7 @@ export class DockerNetwork {
 
   public async getContainersOnNetworkForService(serviceArg: DockerService) {
     const containersOnNetwork = await this.getContainersOnNetwork();
-    const containersOfService = containersOnNetwork.filter(container => {
+    const containersOfService = containersOnNetwork.filter((container) => {
       return container.Name.startsWith(serviceArg.Spec.Name);
     });
     return containersOfService;

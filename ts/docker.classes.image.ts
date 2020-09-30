@@ -16,7 +16,7 @@ export class DockerImage {
 
   public static async findImageByName(dockerHost: DockerHost, imageNameArg: string) {
     const images = await this.getImages(dockerHost);
-    const result = images.find(image => {
+    const result = images.find((image) => {
       if (image.RepoTags) {
         return image.RepoTags.includes(imageNameArg);
       } else {
@@ -38,7 +38,7 @@ export class DockerImage {
     } = {
       imageUrl: creationObject.imageUrl,
       imageTag: creationObject.imageTag,
-      imageOriginTag: null
+      imageOriginTag: null,
     };
     if (imageUrlObject.imageUrl.includes(':')) {
       const imageUrl = imageUrlObject.imageUrl.split(':')[0];
@@ -64,10 +64,7 @@ export class DockerImage {
       )}&tag=${encodeURIComponent(imageUrlObject.imageTag)}`
     );
     if (response.statusCode < 300) {
-      logger.log(
-        'info',
-        `Successfully pulled image ${imageUrlObject.imageUrl} from the registry`
-      );
+      logger.log('info', `Successfully pulled image ${imageUrlObject.imageUrl} from the registry`);
       const image = await DockerImage.findImageByName(dockerHostArg, imageUrlObject.imageOriginTag);
       return image;
     } else {
@@ -111,7 +108,7 @@ export class DockerImage {
 
   constructor(dockerHostArg, dockerImageObjectArg: any) {
     this.dockerHost = dockerHostArg;
-    Object.keys(dockerImageObjectArg).forEach(keyArg => {
+    Object.keys(dockerImageObjectArg).forEach((keyArg) => {
       this[keyArg] = dockerImageObjectArg[keyArg];
     });
   }
@@ -129,7 +126,7 @@ export class DockerImage {
    */
   public async pullLatestImageFromRegistry(): Promise<boolean> {
     const updatedImage = await DockerImage.createFromRegistry(this.dockerHost, {
-      imageUrl: this.RepoTags[0]
+      imageUrl: this.RepoTags[0],
     });
     Object.assign(this, updatedImage);
     // TODO: Compare image digists before and after

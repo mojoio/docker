@@ -16,6 +16,6 @@ export interface IServiceCreationDescriptor {
   accessHostDockerSock?: boolean;
   resources?: {
     memorySizeMB?: number;
-    volumeMounts?: plugins.tsclass.container.IVolumeMount[]
+    volumeMounts?: plugins.tsclass.container.IVolumeMount[];
   };
 }

@@ -24,7 +24,7 @@ export class DockerService {
     networkName: string
   ): Promise<DockerService> {
     const allServices = await DockerService.getServices(dockerHost);
-    const wantedService = allServices.find(service => {
+    const wantedService = allServices.find((service) => {
       return service.Spec.Name === networkName;
     });
     return wantedService;
@@ -38,17 +38,14 @@ export class DockerService {
     serviceCreationDescriptor: interfaces.IServiceCreationDescriptor
   ): Promise<DockerService> {
     // lets get the image
-    logger.log(
-      'info',
-      `now creating service ${serviceCreationDescriptor.name}`
-    );
+    logger.log('info', `now creating service ${serviceCreationDescriptor.name}`);
 
     // await serviceCreationDescriptor.image.pullLatestImageFromRegistry();
     const serviceVersion = await serviceCreationDescriptor.image.getVersion();
 
     const labels: interfaces.TLabels = {
       ...serviceCreationDescriptor.labels,
-      version: serviceVersion
+      version: serviceVersion,
     };
 
     const mounts: Array<{
@@ -70,18 +67,18 @@ export class DockerService {
         Source: '/var/run/docker.sock',
         Consistency: 'default',
         ReadOnly: false,
-        Type: 'bind'
+        Type: 'bind',
       });
     }
 
     if (serviceCreationDescriptor.resources && serviceCreationDescriptor.resources.volumeMounts) {
-      for(const volumeMount of serviceCreationDescriptor.resources.volumeMounts) {
+      for (const volumeMount of serviceCreationDescriptor.resources.volumeMounts) {
         mounts.push({
           Target: volumeMount.containerFsPath,
           Source: volumeMount.hostFsPath,
           Consistency: 'default',
           ReadOnly: false,
-          Type: 'bind'
+          Type: 'bind',
         });
       }
     }
@@ -94,7 +91,7 @@ export class DockerService {
     for (const network of serviceCreationDescriptor.networks) {
       networkArray.push({
         Target: network.Name,
-        Aliases: [serviceCreationDescriptor.networkAlias]
+        Aliases: [serviceCreationDescriptor.networkAlias],
       });
     }
 
@@ -106,7 +103,7 @@ export class DockerService {
       ports.push({
         Protocol: 'tcp',
         PublishedPort: parseInt(hostPort, 10),
-        TargetPort: parseInt(containerPort, 10)
+        TargetPort: parseInt(containerPort, 10),
       });
     }
 
@@ -118,10 +115,10 @@ export class DockerService {
           Name: 'secret.json', // TODO: make sure that works with multiple secrets
           UID: '33',
           GID: '33',
-          Mode: 384
+          Mode: 384,
         },
         SecretID: secret.ID,
-        SecretName: secret.Spec.Name
+        SecretName: secret.Spec.Name,
       });
     }
 
@@ -133,7 +130,7 @@ export class DockerService {
         : 1000;
 
     const limits = {
-      MemoryBytes: memoryLimitMB * 1000000
+      MemoryBytes: memoryLimitMB * 1000000,
     };
 
     if (serviceCreationDescriptor.resources) {
@@ -147,7 +144,7 @@ export class DockerService {
           Image: serviceCreationDescriptor.image.RepoTags[0],
           Labels: labels,
           Secrets: secretArray,
-          Mounts: mounts
+          Mounts: mounts,
           /* DNSConfig: {
             Nameservers: ['1.1.1.1']
           } */
@@ -157,25 +154,25 @@ export class DockerService {
           Delay: 0,
           FailureAction: 'pause',
           Monitor: 15000000000,
-          MaxFailureRatio: 0.15
+          MaxFailureRatio: 0.15,
         },
         ForceUpdate: 1,
         Resources: {
-          Limits: limits
+          Limits: limits,
         },
         LogDriver: {
           Name: 'json-file',
           Options: {
             'max-file': '3',
-            'max-size': '10M'
-          }
-        }
+            'max-size': '10M',
+          },
+        },
       },
       Labels: labels,
       Networks: networkArray,
       EndpointSpec: {
-        Ports: ports
-      }
+        Ports: ports,
+      },
     });
 
     const createdService = await DockerService.getServiceByName(
@@ -235,7 +232,7 @@ export class DockerService {
 
     await this.reReadFromDockerEngine();
     const dockerImage = await DockerImage.createFromRegistry(this.dockerHostRef, {
-      imageUrl: this.Spec.TaskTemplate.ContainerSpec.Image
+      imageUrl: this.Spec.TaskTemplate.ContainerSpec.Image,
     });
 
     const imageVersion = new plugins.smartversion.SmartVersion(dockerImage.Labels.version);

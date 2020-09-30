@@ -25,15 +25,13 @@ export {
   smartpromise,
   smartrequest,
   smartstring,
-  smartversion
+  smartversion,
 };
 
 // @tsclass scope
 import * as tsclass from '@tsclass/tsclass';
 
-export {
-  tsclass
-};
+export { tsclass };
 
 // third party
 import * as rxjs from 'rxjs';

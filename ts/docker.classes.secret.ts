@@ -19,12 +19,12 @@ export class DockerSecret {
 
   public static async getSecretByID(dockerHostArg: DockerHost, idArg: string) {
     const secrets = await this.getSecrets(dockerHostArg);
-    return secrets.find(secret => secret.ID === idArg);
+    return secrets.find((secret) => secret.ID === idArg);
   }
 
   public static async getSecretByName(dockerHostArg: DockerHost, nameArg: string) {
     const secrets = await this.getSecrets(dockerHostArg);
-    return secrets.find(secret => secret.Spec.Name === nameArg);
+    return secrets.find((secret) => secret.Spec.Name === nameArg);
   }
 
   public static async createSecret(
@@ -33,12 +33,12 @@ export class DockerSecret {
   ) {
     const labels: interfaces.TLabels = {
       ...secretDescriptor.labels,
-      version: secretDescriptor.version
+      version: secretDescriptor.version,
     };
     const response = await dockerHostArg.request('POST', '/secrets/create', {
       Name: secretDescriptor.name,
       Labels: labels,
-      Data: plugins.smartstring.base64.encode(secretDescriptor.contentArg)
+      Data: plugins.smartstring.base64.encode(secretDescriptor.contentArg),
     });
 
     const newSecretInstance = new DockerSecret(dockerHostArg);
@@ -76,7 +76,7 @@ export class DockerSecret {
       {
         Name: this.Spec.Name,
         Labels: this.Spec.Labels,
-        Data: plugins.smartstring.base64.encode(contentArg)
+        Data: plugins.smartstring.base64.encode(contentArg),
       }
     );
   }

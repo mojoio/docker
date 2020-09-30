@@ -26,7 +26,7 @@ tap.test('should list networks', async () => {
 
 tap.test('should create a network', async () => {
   const newNetwork = await docker.DockerNetwork.createNetwork(testDockerHost, {
-    Name: 'webgateway'
+    Name: 'webgateway',
   });
   expect(newNetwork).to.be.instanceOf(docker.DockerNetwork);
   expect(newNetwork.Name).to.equal('webgateway');
@@ -41,15 +41,15 @@ tap.test('should remove a network', async () => {
 tap.test('should pull an image from imagetag', async () => {
   const image = await docker.DockerImage.createFromRegistry(testDockerHost, {
     imageUrl: 'hosttoday/ht-docker-node',
-    imageTag: 'alpine'
+    imageTag: 'alpine',
   });
   expect(image).to.be.instanceOf(docker.DockerImage);
   console.log(image);
 });
 
-tap.test('should return a change Observable', async tools => {
+tap.test('should return a change Observable', async (tools) => {
   const testObservable = await testDockerHost.getEventObservable();
-  const subscription = testObservable.subscribe(changeObject => {
+  const subscription = testObservable.subscribe((changeObject) => {
     console.log(changeObject);
   });
   await tools.delayFor(2000);
@@ -62,7 +62,7 @@ tap.test('should create a secret', async () => {
     name: 'testSecret',
     version: '1.0.3',
     contentArg: `{ "hi": "wow"}`,
-    labels: {}
+    labels: {},
   });
   console.log(mySecret);
 });
@@ -77,23 +77,23 @@ tap.test('should activate swarm mode', async () => {
   await testDockerHost.activateSwarm();
 });
 
-tap.test('should list all services', async tools => {
+tap.test('should list all services', async (tools) => {
   const services = await testDockerHost.getServices();
   console.log(services);
 });
 
 tap.test('should create a service', async () => {
   const testNetwork = await docker.DockerNetwork.createNetwork(testDockerHost, {
-    Name: 'testNetwork'
+    Name: 'testNetwork',
   });
   const testSecret = await docker.DockerSecret.createSecret(testDockerHost, {
     name: 'testSecret',
     version: '0.0.1',
     labels: {},
-    contentArg: '{"hi": "wow"}'
+    contentArg: '{"hi": "wow"}',
   });
   const testImage = await docker.DockerImage.createFromRegistry(testDockerHost, {
-    imageUrl: 'registry.gitlab.com/hosttoday/ht-docker-static'
+    imageUrl: 'registry.gitlab.com/hosttoday/ht-docker-static',
   });
   const testService = await docker.DockerService.createService(testDockerHost, {
     image: testImage,
@@ -102,7 +102,7 @@ tap.test('should create a service', async () => {
     networks: [testNetwork],
     networkAlias: 'testService',
     secrets: [testSecret],
-    ports: ['3000:80']
+    ports: ['3000:80'],
   });
 
   await testService.remove();

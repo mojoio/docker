@@ -62,7 +62,7 @@ export class DockerHost {
     await this.auth({
       username: gitlabAuthArray[0],
       password: gitlabAuthArray[1],
-      serveraddress: 'registry.gitlab.com'
+      serveraddress: 'registry.gitlab.com',
     });
   }
 
@@ -98,8 +98,8 @@ export class DockerHost {
    */
   public async getEventObservable(): Promise<plugins.rxjs.Observable<any>> {
     const response = await this.requestStreaming('GET', '/events');
-    return plugins.rxjs.Observable.create(observer => {
-      response.on('data', data => {
+    return plugins.rxjs.Observable.create((observer) => {
+      response.on('data', (data) => {
         const eventString = data.toString();
         try {
           const eventObject = JSON.parse(eventString);
@@ -136,7 +136,7 @@ export class DockerHost {
       DataPathPort: 4789,
       DefaultAddrPool: ['10.10.0.0/8', '20.20.0.0/8'],
       SubnetSize: 24,
-      ForceNewCluster: false
+      ForceNewCluster: false,
     });
     if (response.statusCode === 200) {
       logger.log('info', 'created Swam succesfully');
@@ -155,10 +155,10 @@ export class DockerHost {
       headers: {
         'Content-Type': 'application/json',
         'X-Registry-Auth': this.registryToken,
-        Host: 'docker.sock'
+        Host: 'docker.sock',
       },
       requestBody: dataArg,
-      keepAlive: false
+      keepAlive: false,
     });
     if (response.statusCode !== 200) {
       console.log(response.body);
@@ -175,10 +175,10 @@ export class DockerHost {
         headers: {
           'Content-Type': 'application/json',
           'X-Registry-Auth': this.registryToken,
-          Host: 'docker.sock'
+          Host: 'docker.sock',
         },
         requestBody: null,
-        keepAlive: false
+        keepAlive: false,
       },
       true
     );
