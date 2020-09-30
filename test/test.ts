@@ -4,6 +4,7 @@ import * as docker from '../ts/index';
 let testDockerHost: docker.DockerHost;
 
 if (process.env.CI) {
+  tap.start();
   process.exit(0);
 }
 
