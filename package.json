@@ -43,7 +43,7 @@
   "devDependencies": {
     "@gitzone/tsbuild": "^2.1.25",
     "@gitzone/tsrun": "^1.2.12",
-    "@gitzone/tstest": "^1.0.48",
+    "@gitzone/tstest": "^1.0.52",
     "@pushrocks/tapbundle": "^3.2.9",
     "@types/node": "^14.11.2",
     "tslint": "^6.1.3",
