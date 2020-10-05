@@ -28,8 +28,8 @@
   "homepage": "https://gitlab.com/pushrocks/dockersock#README",
   "dependencies": {
     "@pushrocks/lik": "^4.0.17",
-    "@pushrocks/smartfile": "^8.0.0",
-    "@pushrocks/smartjson": "^3.0.10",
+    "@pushrocks/smartfile": "^8.0.4",
+    "@pushrocks/smartjson": "^4.0.2",
     "@pushrocks/smartlog": "^2.0.39",
     "@pushrocks/smartnetwork": "^1.1.22",
     "@pushrocks/smartpath": "^4.0.3",

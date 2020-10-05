@@ -46,7 +46,7 @@ export class DockerHost {
     }
     console.log(response.body.Status);
     this.registryToken = plugins.smartstring.base64.encode(
-      plugins.smartjson.Smartjson.stringify(authData, {})
+      plugins.smartjson.stringify(authData, {})
     );
   }
 
